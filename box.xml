@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/box.xsd">
+	<import>
+		<box identifier="com.edvunger.guild.wow.raid.progress">
+			<name language="de">Raid Progress</name>
+			<name language="en">Raid Progress</name>
+			<boxType>system</boxType>
+			<objectType>com.edvunger.guild.wow.raid.progress</objectType>
+			<position>sidebarRight</position>
+			<showHeader>0</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			
+			<content language="de">
+				<title>Raid Progress</title>
+			</content>
+			<content language="en">
+				<title>Raid Progress</title>
+			</content>
+		</box>
+	</import>
+</data>

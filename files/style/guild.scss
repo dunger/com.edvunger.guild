@@ -1,0 +1,127 @@
+.containerBoxList {
+  @include screen-sm-down {
+    &.quadrupleColumned {
+      > li + li {
+        margin-top: 10px;
+      }
+    }
+  }
+
+  @include screen-md-up {
+    &.quadrupleColumned {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: -15px;
+
+      > li {
+        overflow: hidden;
+        padding-right: 15px;
+        margin-bottom: 15px;
+
+        .containerBoxContent {
+          overflow: hidden;
+
+          h3 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+
+    &.quadrupleColumned > li {
+      flex: 0 0 25%;
+      /* work-around for IE10 */
+      width: 25%;
+    }
+  }
+}
+
+@media (min-width: 1025px) {
+  .guildMemberDetails .main {
+    padding:  0;
+  }
+
+  .guildMemberDetails .sidebar {
+    flex: 0 0 350px;
+    overflow: hidden;
+  }
+}
+
+body[data-template="wowmember"] .main {
+  padding-top: 0;
+  padding-bottom: 60px;
+}
+
+.guildMemberDetails {
+  background: none !important;
+  border: none !important;
+}
+
+.guildMemberDetails .boxesSidebarRight > .boxContainer > .box {
+  border: none;
+}
+
+.guildMemberDetails > .tabMenuContent:not(.hidden) {
+  display: flex;
+}
+
+.guildMemberDetails .contentMiddle {
+  flex-basis: calc(100% - 700px);
+  max-width: calc(100% - 700px);
+}
+
+.guildMemberDetails .tabMenuContent {
+  margin-top: 10px;
+}
+
+.guildMemberDetails .gearItemList > li {
+  margin: 3px 0;
+  border: 3px solid;
+}
+
+.guildMemberDetails .tabMenu > ul > li.active > a {
+  color: rgba(230, 81, 0, 1);
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.guildMemberDetails .tabularBox {
+  width: 100%;
+}
+
+.calendarEventDecisionYes {
+  border-left: 10px solid green;
+}
+.calendarEventDecisionMaybe {
+  border-left: 10px solid yellow;
+}
+.calendarEventDecisionNo {
+  border-left: 10px solid red;
+}
+
+.progressBox > .progress {
+  font-family: 'Comic Sans MS', 'Marker Felt', cursive;
+  height: 2em;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.4);
+  position: relative;
+  border-radius: 50px;
+}
+.progressBox > .progress:before {
+  content: attr(data-label);
+  font-size: 1em;
+  position: absolute;
+  text-align: center;
+  top: 3px;
+  left: 0;
+  right: 0;
+}
+.progressBox > .progress .value {
+  background-color: rgba(112, 184, 0, 1);
+  display: inline-block;
+  height: 100%;
+  border-radius: 50px;
+}

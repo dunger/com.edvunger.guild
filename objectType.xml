@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/objectType.xsd">
+	<import>
+		<!-- box controllers -->
+		<type>
+			<name>com.edvunger.guild.wow.raid.progress</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>guild\system\box\WowRaidProgressBoxController</classname>
+		</type>
+		<!-- /box controllers -->
+		
+		<!-- raid progress box condition -->
+		<type>
+			<name>com.edvunger.guild.wow.raid.progress.guild</name>
+			<definitionname>com.edvunger.guild.box.wow.raid.progress.condition</definitionname>
+			<classname>guild\system\condition\WowRaidProgressCondition</classname>
+		</type>
+		<!-- /raid progress box condition -->
+		
+		
+		<!-- rebuild data workers -->
+		<type>
+			<name>com.edvunger.guild.rebuildTemplates</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname>guild\system\worker\TemplateWorker</classname>
+			<nicevalue>-200</nicevalue>
+		</type>
+		<!-- /rebuild data workers -->
+	</import>
+</data>

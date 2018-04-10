@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="com.edvunger.guild" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd">
+	<packageinformation>
+		<packagename>Guild Manager</packagename>
+		<packagename language="de">Gildenmanager</packagename>
+		<packagedescription><![CDATA[Add guild functions]]></packagedescription>
+		<packagedescription language="de"><![CDATA[Fügt Gilden Funktionen hinzu.]]></packagedescription>
+		<isapplication>1</isapplication>
+		<version>0.2.1</version>
+		<date>2018-04-10</date>
+	</packageinformation>
+	
+	<authorinformation>
+		<author>EDV-Unger - David Unger</author>
+		<authorurl>https://www.edv-unger.com/</authorurl>
+	</authorinformation>
+	
+	<requiredpackages>
+		<requiredpackage minversion="3.1.1">com.woltlab.wcf</requiredpackage>
+		<requiredpackage minversion="3.1.1">com.woltlab.calendar</requiredpackage>
+		<requiredpackage minversion="0.2.0">com.edvunger.guild.calendar</requiredpackage>
+	</requiredpackages>
+	
+	<compatibility>
+		<api version="2018" />
+	</compatibility>
+	
+	<instructions type="install">
+		<instruction type="sql" />
+		<instruction type="file"/>
+		<!--<instruction type="file" application="calendar">files_calendar.tar</instruction>-->
+		<instruction type="template" />
+		<instruction type="template" application="calendar">templates_calendar.tar</instruction>
+		<instruction type="acpTemplate" />
+		<instruction type="templateListener" />
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+		<instruction type="acpMenu" />
+		<instruction type="userMenu" />
+		<instruction type="userGroupOption" />
+		<instruction type="eventListener" />
+		<instruction type="option" />
+		<instruction type="cronjob" />
+		<instruction type="language" />
+		<instruction type="page" />
+		<instruction type="box" />
+		<instruction type="script">acp/install_com.edv-unger.guild.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="0.2.0">
+		<instruction type="file"/>
+	</instructions>
+</package>

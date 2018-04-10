@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/acpMenu.xsd">
+	<import>
+		<acpmenuitem name="guild.acp.menu.link">
+			<parent>wcf.acp.menu.link.application</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="guild.acp.menu.game.list">
+			<controller>guild\acp\page\GameListPage</controller>
+			<parent>guild.acp.menu.link</parent>
+			<permissions>admin.guild.canManageGames</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="guild.acp.menu.guild.list">
+			<controller>guild\acp\page\GuildListPage</controller>
+			<parent>guild.acp.menu.link</parent>
+			<permissions>admin.guild.canManageGuild</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="guild.acp.menu.guild.add">
+			<controller>guild\acp\form\GuildAddForm</controller>
+			<parent>guild.acp.menu.guild.list</parent>
+			<permissions>admin.guild.canManageGuild</permissions>
+			<icon>fa-plus</icon>
+		</acpmenuitem>
+		<acpmenuitem name="guild.acp.menu.game.wow">
+			<controller>guild\acp\page\WowPage</controller>
+			<parent>guild.acp.menu.link</parent>
+			<permissions>admin.guild.canManageGames</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="guild.acp.menu.avatar.list">
+			<controller>guild\acp\page\AvatarListPage</controller>
+			<parent>guild.acp.menu.link</parent>
+			<permissions>admin.guild.canManageGames</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="guild.acp.menu.avatar.add">
+			<controller>guild\acp\form\AvatarAddForm</controller>
+			<parent>guild.acp.menu.avatar.list</parent>
+			<permissions>admin.guild.canManageGames</permissions>
+			<icon>fa-plus</icon>
+		</acpmenuitem>
+	</import>
+</data>

@@ -1,0 +1,112 @@
+
+/**
+ * Namespace for event date participation related classes.
+ */
+Calendar.Event.Date.Guild = { };
+Calendar.Event.Date.Guild.Participation = { };
+
+/**
+ * Manages event date participation.
+ */
+Calendar.Event.Date.Guild.Participation.Manager = Class.extend({});
+
+Calendar.Event.Date.Guild.QuickParticipation = Class.extend({
+    /**
+     * success callback function
+     * @var	object
+     */
+    _callback: null,
+
+    /**
+     * action proxy
+     * @var	WCF.Action.Proxy
+     */
+    _proxy: null,
+
+    /**
+     * Initializes the Calendar.Event.Date.Guild.QuickParticipation class.
+     *
+     * @param	object		callback
+     */
+    init: function(callback) {
+        this._callback = callback;
+
+        // initialize proxy
+        this._proxy = new WCF.Action.Proxy({
+            success: $.proxy(this._success, this)
+        });
+
+        // bind event listener
+        $('.quickParticipation').click($.proxy(this._click, this));
+    },
+
+    /**
+     * Handles clicks on the 'quickParticipation' button.
+     */
+    _click: function(event) {
+        event.preventDefault();
+
+        this._proxy.setOption('data', {
+            actionName: 'save',
+            className: 'calendar\\data\\event\\date\\GuildEventDateQuickAction',
+            objectIDs: [$(event.currentTarget).attr('data-event-date-id')],
+            parameters: {
+                companions: 0,
+                decision: $(event.currentTarget).attr('data-event-decision'),
+                guildMember: $('#eventDateParticipationMember').val(),
+                guildRole: $('#eventDateParticipationRole').val(),
+                message: ''
+            }
+        });
+
+        this._proxy.sendRequest();
+    },
+
+    /**
+     * Marks all boards as read.
+     *
+     * @param	object		data
+     * @param	string		textStatus
+     * @param	jQuery		jqXHR
+     */
+    _success: function(data, textStatus, jqXHR) {
+        if (data.returnValues.decision == 'yes') {
+            $(elById("event-"+data.returnValues.eventID)).removeClass('calendarEventDecisionMaybe').removeClass('calendarEventDecisionNo').addClass('calendarEventDecisionYes');
+            $(elById("event-decision-maybe-"+data.returnValues.eventID)).removeClass('invisible');
+            $(elById("event-decision-no-"+data.returnValues.eventID)).removeClass('invisible');
+            $(elById("event-decision-yes-"+data.returnValues.eventID)).addClass('invisible');
+            $(elById("event-"+data.returnValues.eventID)).children().first().addClass('calendarEventDecisionMargin');
+        } else if (data.returnValues.decision == 'maybe') {
+            $(elById("event-"+data.returnValues.eventID)).removeClass('calendarEventDecisionYes').removeClass('calendarEventDecisionNo').addClass('calendarEventDecisionMaybe');
+            $(elById("event-decision-yes-"+data.returnValues.eventID)).removeClass('invisible');
+            $(elById("event-decision-no-"+data.returnValues.eventID)).removeClass('invisible');
+            $(elById("event-decision-maybe-"+data.returnValues.eventID)).addClass('invisible');
+            $(elById("event-"+data.returnValues.eventID)).children().first().addClass('calendarEventDecisionMargin');
+        } else if (data.returnValues.decision == 'no') {
+            $(elById("event-"+data.returnValues.eventID)).removeClass('calendarEventDecisionYes').removeClass('calendarEventDecisionMaybe').addClass('calendarEventDecisionNo');
+            $(elById("event-decision-yes-"+data.returnValues.eventID)).removeClass('invisible');
+            $(elById("event-decision-maybe-"+data.returnValues.eventID)).removeClass('invisible');
+            $(elById("event-decision-no-"+data.returnValues.eventID)).addClass('invisible');
+            $(elById("event-"+data.returnValues.eventID)).children().first().addClass('calendarEventDecisionMargin');
+        }
+    }
+});
+
+Calendar.Event.Guild = { };
+Calendar.Event.Guild.CharacterSelect = Class.extend({
+
+    /**
+     */
+    init: function() {
+        $('#eventDateParticipationMember').change(this._click);
+    },
+
+    /**
+     * Handles clicks on the 'mark all as read' button.
+     */
+    _click: function(event) {
+        event.preventDefault();
+        var $roleID = $('option:selected', $(event.currentTarget)).attr('data-default-role');
+        $('#eventDateParticipationRole').val($roleID);
+    }
+});

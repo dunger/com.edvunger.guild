@@ -1,0 +1,1 @@
+{js application='calendar' file='Calendar.Guild' hasTiny=false}

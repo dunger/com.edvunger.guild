@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/eventListener.xsd">
+    <import>
+        <eventlistener name="GuildCalendarCategoryAdd">
+            <eventclassname>calendar\acp\form\CategoryAddForm</eventclassname>
+            <eventname>assignVariables,readFormParameters,readData,save,saved,validate</eventname>
+            <listenerclassname>guild\system\event\listener\CalendarCategoryAddFormListener</listenerclassname>
+            <inherit>1</inherit>
+            <environment>admin</environment>
+        </eventlistener>
+        <eventlistener name="GuildCalendarCategoryEdit">
+            <eventclassname>calendar\acp\form\CategoryEditForm</eventclassname>
+            <eventname>assignVariables,readFormParameters,readData,save,saved,validate</eventname>
+            <listenerclassname>guild\system\event\listener\CalendarCategoryAddFormListener</listenerclassname>
+            <inherit>1</inherit>
+            <environment>admin</environment>
+        </eventlistener>
+        <eventlistener name="GuildRequestListener">
+            <eventclassname>wcf\system\WCF</eventclassname>
+            <eventname>initialized</eventname>
+            <listenerclassname>guild\system\event\listener\RequestListener</listenerclassname>
+            <environment>user</environment>
+        </eventlistener>
+        <eventlistener name="GuildCalendarEventPageListener">
+            <eventclassname>calendar\page\EventPage</eventclassname>
+            <eventname>assignVariables</eventname>
+            <listenerclassname>calendar\system\event\listener\GuildCalendarEventPageListener</listenerclassname>
+            <environment>user</environment>
+        </eventlistener>
+        <eventlistener name="GuildCalendarUpcomingEventPageListener">
+            <environment>user</environment>
+            <eventclassname>calendar\page\UpcomingEventListPage</eventclassname>
+            <eventname>assignVariables, readParameters</eventname>
+            <listenerclassname>calendar\system\event\listener\GuildCalendarUpcomingEventPageListener</listenerclassname>
+        </eventlistener>
+        <eventlistener name="GuildUserDeleteListener">
+            <eventclassname>wcf\data\user\UserAction</eventclassname>
+            <eventname>finalizeAction</eventname>
+            <listenerclassname>guild\system\event\listener\UserDeleteListener</listenerclassname>
+            <environment>admin</environment>
+        </eventlistener>
+    </import>
+</data>

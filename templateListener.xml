@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/vortex/XSD/templateListener.xsd">
+	<import>
+		<!-- admin -->
+		<templatelistener name="guildCalendarCategorySection">
+			<eventname>dataFields</eventname>
+			<environment>admin</environment>
+			<templatecode><![CDATA[{include file='__calendarCategory' application='guild'}]]></templatecode>
+			<templatename>categoryAdd</templatename>
+		</templatelistener>
+		<!-- /admin -->
+		<!-- user -->
+		<templatelistener name="guildCalendarInit">
+			<environment>user</environment>
+			<templatename>headInclude</templatename>
+			<eventname>javascriptInit</eventname>
+			<templatecode><![CDATA[{include file='__javascriptGuildInit' application='calendar'}]]></templatecode>
+		</templatelistener>
+		<templatelistener name="guildCalendarInclude">
+			<environment>user</environment>
+			<templatename>headInclude</templatename>
+			<eventname>javascriptInclude</eventname>
+			<templatecode><![CDATA[{include file='__javascriptGuildInclude' application='calendar'}]]></templatecode>
+		</templatelistener>
+		<templatelistener name="guildCalendarEventDateParticipationFormListener">
+			<environment>user</environment>
+			<templatename>eventDateParticipationForm</templatename>
+			<eventname>eventDateParticipation</eventname>
+			<templatecode><![CDATA[	<dl id="eventDateParticipationMemberContainer">
+		<dt><label for="eventDateParticipationMember">{lang}guild.user.character.select{/lang}</label></dt>
+		<dd><select id="eventDateParticipationMember">
+			{foreach from=$memberList item=member}
+				<option value="{@$member->memberID}" {if $member->roleID == $mainMemberID} selected{/if} data-default-role="{@$member->roleID}">{lang}{@$member->name}{/lang}</option>
+			{/foreach}
+		</select></dd>
+	</dl>
+
+	<dl id="eventDateParticipationRoleContainer">
+		<dt><label for="eventDateParticipationRole">{lang}guild.user.role.decision{/lang}</label></dt>
+		<dd><select id="eventDateParticipationRole">
+			{foreach from=$roleList item=role}
+				<option value="{@$role->roleID}" {if $role->roleID == $mainRoleID} selected{/if}>{lang}{@$role->name}{/lang}</option>
+			{/foreach}
+		</select></dd>
+	</dl>]]></templatecode>
+		</templatelistener>
+		<!-- /user -->
+	</import>
+</data>
