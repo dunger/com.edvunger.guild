@@ -2,6 +2,7 @@
 namespace guild\data\game;
 use guild\system\game\GameHandler;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IToggleAction;
 use wcf\system\WCF;
 
 /**
@@ -10,16 +11,26 @@ use wcf\system\WCF;
  * @license		GPL <http://www.gnu.org/licenses/gpl-3.0>
  * @package		com.edvunger.guild
  */
-class GameAction extends AbstractDatabaseObjectAction {
-	/**
-	 * @inheritDoc
-	 */
-    public $className = GameEditor::class;
+class GameAction extends AbstractDatabaseObjectAction implements IToggleAction {
+    /**
+     * @inheritDoc
+     */
+    protected $permissionsCreate = ['admin.guild.canManageGames'];
+
+    /**
+     * @inheritDoc
+     */
+    protected $permissionsDelete = ['admin.guild.canManageGames'];
 
     /**
      * @inheritDoc
      */
     protected $permissionsUpdate = ['admin.guild.canManageGames'];
+
+	/**
+	 * @inheritDoc
+	 */
+    public $className = GameEditor::class;
 
     /**
      * Validates permissions and parameters.
@@ -87,5 +98,28 @@ class GameAction extends AbstractDatabaseObjectAction {
         }
 
         return $template;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function validateToggle() {
+        parent::validateUpdate();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toggle() {
+        /*
+         * Todo: why read objects?
+         */
+        $this->readObjects();
+
+        foreach ($this->getObjects() as $game) {
+            $game->update(['isActive' => $game->isActive ? 0 : 1]);
+        }
+
+        GameHandler::getInstance()->reloadCache();
     }
 }

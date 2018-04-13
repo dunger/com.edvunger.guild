@@ -1,12 +1,12 @@
 <?php
 namespace guild\system\cronjob;
-use guild\data\member\MemberAction;
 use guild\data\member\MemberList;
 use guild\system\game\GameHandler;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\cronjob\AbstractCronjob;
+use wcf\system\WCF;
 
 /**
  * @author		David Unger <david@edv-unger.com>
@@ -22,8 +22,6 @@ class UpdateGuildCronjob extends AbstractCronjob {
     public function execute(Cronjob $cronjob) {
         parent::execute($cronjob);
 
-        $games = GameHandler::getInstance()->getGames();
-
         /*
          * Delete old Member
          */
@@ -31,13 +29,9 @@ class UpdateGuildCronjob extends AbstractCronjob {
         $oldMemberList->getInactive();
 
         if (!empty($oldMemberList->objectIDs)) {
+            $oldMemberIDs = [];
             foreach ($oldMemberList->getObjects() as $oldMember) {
-                if (!empty($games->objectIDs)) {
-                    foreach ($games->getObjects() as $game) {
-                        $class = new $game->apiClass;
-                        $class->removeMember($oldMember->memberID);
-                    }
-                }
+                $oldMemberIDs[$oldMember->guildID][] = $oldMember->memberID;
 
                 // remove user from group
                 if ($oldMember->userID) {
@@ -48,23 +42,31 @@ class UpdateGuildCronjob extends AbstractCronjob {
                     ]);
                     $userAction->executeAction();
                 }
-
-                unset($class, $statisticList, $statisticAction, $userAction);
             }
 
             // delete old member
-            $memberAction = new MemberAction($oldMemberList->objectIDs, 'delete');
-            $memberAction->executeAction();
+            if (!empty($oldMemberIDs)) {
+                foreach ($oldMemberIDs as $guildID => $memberIDs) {
+                    $sql = "DELETE FROM guild".WCF_N."_member
+                            WHERE	memberID IN (?)
+                            AND     guildID = ?";
+                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $statement->execute([implode(',', $memberIDs), $guildID]);
+                }
+            }
         }
-        unset($oldMemberList);
 
+        /*
+         * run game cronjobs
+         */
+        $games = GameHandler::getInstance()->getGames();
         if (!empty($games)) {
             foreach ($games as $game) {
                 if ($game->isActive == false || empty($game->apiClass)) {
                     continue;
                 }
 
-                $class = new $game->apiClass;
+                $class = $game->getApiClass();
                 $class->cronjob($game);
             }
         }

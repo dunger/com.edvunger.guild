@@ -4,7 +4,7 @@ use guild\data\guild\Guild;
 use guild\data\wow\instance\Instance;
 use guild\data\wow\instance\InstanceAction;
 use wcf\form\AbstractForm;
-use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 
 /**
@@ -17,7 +17,7 @@ class WowInstanceEditForm extends WowInstanceAddForm {
     /**
      * @inheritDoc
      */
-    public $activeMenuItem = 'guild.acp.menu.game.wow';
+    public $activeMenuItem = 'guild.acp.menu.game.list';
 
     /**
      * @inheritDoc
@@ -46,7 +46,7 @@ class WowInstanceEditForm extends WowInstanceAddForm {
         $this->instance = new Instance($this->instanceID);
 
         if (!$this->instance->instanceID) {
-            throw new PermissionDeniedException();
+            throw new IllegalLinkException();
         }
     }
 

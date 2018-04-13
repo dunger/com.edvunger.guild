@@ -1,5 +1,6 @@
 <?php
 namespace guild\acp\form;
+use guild\data\wow\instance\Instance;
 use guild\data\wow\instance\InstanceAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
@@ -21,7 +22,7 @@ class WowInstanceAddForm extends AbstractForm {
     /**
      * @inheritDoc
      */
-    public $activeMenuItem = 'guild.acp.menu.game.wow';
+    public $activeMenuItem = 'guild.acp.menu.game.list';
 
     /**
      * @inheritDoc

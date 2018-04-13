@@ -5,9 +5,7 @@ use guild\data\guild\GuildList;
 use guild\system\guild\GuildHandler;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
-use wcf\system\condition\AbstractMultiCategoryCondition;
-use wcf\system\condition\AbstractSelectCondition;
-use wcf\system\condition\IObjectCondition;
+use wcf\system\condition\AbstractMultiSelectCondition;
 use wcf\system\condition\IObjectListCondition;
 
 /**
@@ -16,7 +14,7 @@ use wcf\system\condition\IObjectListCondition;
  * @license		GPL <http://www.gnu.org/licenses/gpl-3.0>
  * @package		com.edvunger.guild
  */
-class WowRaidProgressCondition extends AbstractSelectCondition implements IObjectListCondition {
+class InstanceProgressCondition extends AbstractMultiSelectCondition implements IObjectListCondition {
     /**
      * @inheritDoc
      */
@@ -53,7 +51,7 @@ class WowRaidProgressCondition extends AbstractSelectCondition implements IObjec
      * @inheritDoc
      */
     protected function getFieldElement() {
-        $guilds = GuildHandler::getInstance()->getGuildByGameTag('wow');
+        $guilds = GuildHandler::getInstance()->getGuilds();
         $guildCount = count($guilds);
 
         $fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple size="'.($guildCount > 10 ? 10 : $guildCount).'">';
@@ -69,6 +67,6 @@ class WowRaidProgressCondition extends AbstractSelectCondition implements IObjec
      * @inheritDoc
      */
     protected function getOptions() {
-        return GuildHandler::getInstance()->getGuildByGameTag('wow');
+        return GuildHandler::getInstance()->getGuilds();
     }
 }

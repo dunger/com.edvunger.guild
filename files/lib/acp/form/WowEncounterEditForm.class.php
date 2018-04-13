@@ -4,8 +4,10 @@ use guild\data\wow\encounter\Encounter;
 use guild\data\wow\encounter\EncounterAction;
 use guild\data\wow\instance\Instance;
 use wcf\form\AbstractForm;
-use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
  * @author		David Unger <david@edv-unger.com>
@@ -17,7 +19,7 @@ class WowEncounterEditForm extends WowEncounterAddForm {
     /**
      * @inheritDoc
      */
-    public $activeMenuItem = 'guild.acp.menu.game.wow';
+    public $activeMenuItem = 'guild.acp.menu.game.list';
 
     /**
      * @inheritDoc
@@ -46,7 +48,7 @@ class WowEncounterEditForm extends WowEncounterAddForm {
         $this->encounter = new Encounter($this->encounterID);
 
         if (!$this->encounter->encounterID) {
-            throw new PermissionDeniedException();
+            throw new IllegalLinkException();
         }
     }
 
@@ -56,6 +58,7 @@ class WowEncounterEditForm extends WowEncounterAddForm {
     public function readData() {
         parent::readData();
 
+        $this->objectAction = $this->encounter->objectAction;
         $this->name = $this->encounter->name;
         $this->instanceID = $this->encounter->instanceID;
     }
@@ -68,6 +71,7 @@ class WowEncounterEditForm extends WowEncounterAddForm {
 
         // update encounter
         $this->objectAction = new EncounterAction([$this->encounter], 'update', ['data' => [
+            'encounterID' => $this->encounterID,
             'name' => $this->name,
             'instanceID' => $this->instanceID
         ]]);
@@ -78,6 +82,11 @@ class WowEncounterEditForm extends WowEncounterAddForm {
 
         // show success message
         WCF::getTPL()->assign('success', true);
+
+        /*
+         * redirect to the new url
+         */
+        HeaderUtil::redirect(LinkHandler::getInstance()->getLink('WowEncounterEdit', ['application' => 'guild', 'id' => $this->encounterID, 'isACP' => true]));
     }
 
     /**

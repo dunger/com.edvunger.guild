@@ -2,6 +2,7 @@
 namespace guild\acp\form;
 use guild\data\game\GameAction;
 use guild\data\game\GameList;
+use guild\data\guild\Guild;
 use guild\data\guild\GuildAction;
 use guild\system\guild\GuildHandler;
 use wcf\form\AbstractForm;
@@ -161,7 +162,7 @@ class GuildAddForm extends AbstractForm {
 			'apiData' => JSON::encode($this->apiData),
 			'isActive' => $this->isActive ? 1 : 0,
 		]]);
-		/** @var Guild $game */
+		/** @var Guild $guild */
 		$this->objectAction->executeAction()['returnValues'];
 
 		// reset values

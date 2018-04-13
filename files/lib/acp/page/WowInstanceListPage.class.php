@@ -14,7 +14,7 @@ class WowInstanceListPage extends SortablePage {
     /**
      * @inheritDoc
      */
-    public $activeMenuItem = 'guild.acp.menu.game.wow';
+    public $activeMenuItem = 'guild.acp.menu.game.list';
 
     /**
      * @inheritDoc
@@ -45,55 +45,4 @@ class WowInstanceListPage extends SortablePage {
      * @inheritDoc
      */
     public $validSortFields = ['name', 'title', 'mapID', 'difficulty', 'isRaid'];
-
-    /**
-     * @inheritDoc
-     */
-    protected function initObjectList() {
-        parent::initObjectList();
-
-        // call validateSortField event
-        EventHandler::getInstance()->fireAction($this, 'validateSortField');
-
-        if (!in_array($this->sortField, $this->validSortFields)) {
-            $this->sortField = $this->defaultSortField;
-        }
-        // call validateSortOrder event
-        EventHandler::getInstance()->fireAction($this, 'validateSortOrder');
-
-        switch ($this->sortOrder) {
-            case 'ASC':
-            case 'DESC':
-                break;
-
-            default:
-                $this->sortOrder = $this->defaultSortOrder;
-        }
-
-        if ($this->sortField != 'name') {
-            $this->sqlOrderBy = $this->sortField . " " . $this->sortOrder . ", name ASC";
-            $this->sortField = $this->sortOrder = '';
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function readObjects() {
-        parent::readObjects();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readData() {
-        parent::readData();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables() {
-        parent::assignVariables();
-    }
 }

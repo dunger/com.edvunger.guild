@@ -1,12 +1,10 @@
 <?php
 namespace guild\system\game\api\wow;
 use guild\data\avatar\AvatarList;
-use guild\data\guild\ViewableGuildList;
 use guild\data\member\MemberAction;
 use guild\data\member\MemberList;
 use guild\data\wow\encounter\EncounterList;
-use guild\data\wow\statistic\StatisticList;
-use guild\data\wow\statistic\StatisticAction;
+use guild\data\wow\instance\InstanceList;
 use guild\system\guild\GuildHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -18,9 +16,46 @@ use wcf\util\DateUtil;
  * @package		com.edvunger.guild
  */
 class WoW {
+
+    /**
+     * @inheritDoc
+     */
     private $maxChars = 99;
+
+    /**
+     * @inheritDoc
+     */
     private $minKills = 5;
+
+    /**
+     * @inheritDoc
+     */
     private $week = null;
+
+    /**
+     * @inheritDoc
+     */
+    private $buttons = [
+        'encounter' => [
+            'title' => 'guild.acp.game.wow.encounter',
+            'icon' => 'fa-bug',
+            'controller' => 'WowEncounterList',
+        ],
+        'instance' => [
+            'title' => 'guild.acp.game.wow.instances',
+            'icon' => 'fa-fort-awesome',
+            'controller' => 'WowInstanceList',
+        ]
+    ];
+
+    /**
+     * @inheritDoc
+     */
+    private $guildButtons = [];
+
+    /**
+     * @inheritDoc
+     */
     private $fields = [
         'locale' => [
             'type' => 'select',
@@ -43,13 +78,6 @@ class WoW {
             'valid' => '^\d+$'
         ],
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getFields() {
-        return $this->fields;
-    }
 
     /**
      * @inheritDoc
@@ -336,12 +364,31 @@ class WoW {
         return;
     }
 
-    public function removeMember($memberID) {
-        $statisticList = new StatisticList();
-        $statisticList->getByMemberID($memberID);
-        if (!empty($statisticList->objectIDs)) {
-            $statisticAction = new StatisticAction($statisticList->objectIDs, 'delete');
-            $statisticAction->executeAction();
-        }
+    /**
+     * @inheritDoc
+     */
+    public function getButtons() {
+        return $this->buttons;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getGuildButtons() {
+        return $this->guildButtons;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFields() {
+        return $this->fields;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getInstanceClass() {
+        return new InstanceList();
     }
 }

@@ -2,6 +2,8 @@
 namespace guild\system\box;
 use guild\data\guild\GuildList;
 use guild\data\wow\instance\InstanceList;
+use guild\system\game\GameHandler;
+use guild\system\guild\GuildHandler;
 use wcf\system\box\AbstractDatabaseObjectListBoxController;
 use wcf\system\WCF;
 
@@ -11,12 +13,12 @@ use wcf\system\WCF;
  * @license		GPL <http://www.gnu.org/licenses/gpl-3.0>
  * @package		com.edvunger.guild
  */
-class WowRaidProgressBoxController extends AbstractDatabaseObjectListBoxController {
+class InstanceProgressBoxController extends AbstractDatabaseObjectListBoxController {
     /**
     /**
      * @inheritDoc
      */
-    protected $conditionDefinition = 'com.edvunger.guild.box.wow.raid.progress.condition';
+    protected $conditionDefinition = 'com.edvunger.guild.box.instance.progress.condition';
 
     /**
      * @inheritDoc
@@ -49,14 +51,29 @@ class WowRaidProgressBoxController extends AbstractDatabaseObjectListBoxControll
      */
     protected function getObjectList() {
         foreach ($this->box->getConditions() as $condition) {
-            if ($condition->getObjectType()->objectType == 'com.edvunger.guild.wow.raid.progress.guild') {
+            if ($condition->getObjectType()->objectType == 'com.edvunger.guild.instance.progress') {
                 $this->guildIDs = $condition->conditionData['guildIDs'];
             }
         }
 
         if (!empty($this->guildIDs)) {
-            $instance = new InstanceList();
-            $this->progress = $instance->getProgress($this->guildIDs);
+            $guilds = GuildHandler::getInstance()->getGuilds($this->guildIDs);
+
+            $games = [];
+            foreach ($guilds as $guild) {
+                if (!$guild->isActive) {
+                    continue;
+                }
+
+                $games[$guild->gameID][] = $guild->guildID;
+            }
+
+            if (sizeof($games)) {
+                foreach ($games as $gameID => $guildIDs) {
+                    $apiInstanceClass = GameHandler::getInstance()->getGame($gameID)->getApiClass()->getInstanceClass();
+                    $this->progress = array_merge($this->progress, $apiInstanceClass->getProgress($guildIDs));
+                }
+            }
         }
 
         return new GuildList();

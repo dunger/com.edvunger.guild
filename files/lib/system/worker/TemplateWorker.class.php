@@ -158,5 +158,49 @@ class TemplateWorker extends AbstractWorker {
 			<li id="event-decision-no-{@$eventDate->eventDateID}"{if $eventDate->decision == \'no\' && $eventDate->decision != \'\'} class="invisible"{/if}><a href="#" class="quickParticipation" data-event-decision="no" data-event-date-id="{@$eventDate->eventDateID}" data-tooltip="{lang}guild.user.event.decision.no{/lang}"><span class="icon icon16 fa-times red"></span> <span class="invisible">{lang}guild.user.event.decision.no{/lang}</span></a></li>
 		</ol>';
         file_put_contents($packageDir.'templates/guildEventDateListItem.tpl', str_replace($search, $replace, file_get_contents($packageDir.'templates/eventDateListItem.tpl')));
+
+        /*
+         * only needed for WSC 3.0
+         */
+        if (version_compare(PACKAGE_VERSION, '3.1', '<')) {
+            /*
+             * Copy calendar/templates/guildEventDateParticipationForm.tpl
+             *
+             * Change: include
+             */
+            $fileContent = file_get_contents($packageDir.'templates/eventDateParticipationForm.tpl');
+            $search = [
+                "/(<dl id=\"eventDateParticipationCompanionsContainer\">)(.*)(<dl id=\"eventDateParticipationMessageContainer\">)/s"
+            ];
+            $replace = [
+                '$1$2
+                <dl id="eventDateParticipationMemberContainer">
+                    <dt><label for="eventDateParticipationMember">{lang}guild.user.character.select{/lang}</label></dt>
+                    <dd><select id="eventDateParticipationMember">
+                        {foreach from=$memberList item=member}
+                            <option value="{@$member->memberID}" {if $member->roleID == $mainMemberID} selected{/if} data-default-role="{@$member->roleID}">{lang}{@$member->name}{/lang}</option>
+                        {/foreach}
+                    </select></dd>
+                </dl>
+            
+                <dl id="eventDateParticipationRoleContainer">
+                    <dt><label for="eventDateParticipationRole">{lang}guild.user.role.decision{/lang}</label></dt>
+                    <dd><select id="eventDateParticipationRole">
+                        {foreach from=$roleList item=role}
+                            <option value="{@$role->roleID}" {if $role->roleID == $mainRoleID} selected{/if}>{lang}{@$role->name}{/lang}</option>
+                        {/foreach}
+                    </select></dd>
+                </dl>
+                $3'
+            ];
+            file_put_contents($packageDir.'templates/guildEventDateParticipationForm.tpl', preg_replace($search, $replace, $fileContent));
+
+            /*
+             * Copy calendar/templates/eventDateParticipationForm.tpl
+             *
+             * Change: include
+             */
+            file_put_contents($packageDir.'templates/guildEventDateParticipationFormOwner.tpl', str_replace("{include file='eventDateParticipationForm' application='calendar'}","{include file='guildEventDateParticipationForm' application='calendar'}", file_get_contents($packageDir.'templates/eventDateParticipationFormOwner.tpl')));
+        }
     }
 }

@@ -4,6 +4,14 @@
     <div class="contentHeaderTitle">
         <h1 class="contentTitle">{lang}guild.acp.game.wow.instance.{$action}{/lang}</h1>
     </div>
+
+    <nav class="contentHeaderNavigation">
+        <ul>
+            <li><a href="{link application='guild' controller='WowInstanceList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}guild.acp.game.wow.instances{/lang}</span></a></li>
+
+            {event name='contentHeaderNavigation'}
+        </ul>
+    </nav>
 </header>
 
 

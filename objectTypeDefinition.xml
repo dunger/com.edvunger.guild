@@ -3,9 +3,13 @@
 	<import>
 		<!-- box conditions -->
 		<definition>
-			<name>com.edvunger.guild.box.wow.raid.progress.condition</name>
+			<name>com.edvunger.guild.box.instance.progress.condition</name>
 			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
 		</definition>
 		<!-- /box conditions -->
 	</import>
+	
+	<delete>
+		<definition name="com.edvunger.guild.box.wow.raid.progress.condition" />
+	</delete>
 </data>

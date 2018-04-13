@@ -30,7 +30,7 @@
         <eventlistener name="GuildCalendarUpcomingEventPageListener">
             <environment>user</environment>
             <eventclassname>calendar\page\UpcomingEventListPage</eventclassname>
-            <eventname>assignVariables, readParameters</eventname>
+            <eventname>assignVariables,readParameters</eventname>
             <listenerclassname>calendar\system\event\listener\GuildCalendarUpcomingEventPageListener</listenerclassname>
         </eventlistener>
         <eventlistener name="GuildUserDeleteListener">

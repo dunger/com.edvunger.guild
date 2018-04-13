@@ -1,5 +1,14 @@
 {include file='header' pageTitle='guild.acp.guild.list'}
 
+{if $objects|count}
+	<script data-relocate="true">
+        $(function() {
+            new WCF.Action.Toggle('guild\\data\\guild\\GuildAction', '.guildRow');
+            new WCF.Action.Delete('guild\\data\\guild\\GuildAction', '.guildRow');
+        });
+	</script>
+{/if}
+
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}guild.acp.guild.list{/lang}</h1>
@@ -25,8 +34,8 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnID columnGameID{if $sortField == 'gameID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link application='guild' controller='GameList'}pageNo={@$pageNo}&sortField=gameID&sortOrder={if $sortField == 'gameID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.member.gameID{/lang}</a></th>
-					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link application='guild' controller='GameList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.member.name{/lang}</a></th>
+					<th class="columnID columnGameID{if $sortField == 'guildID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link application='guild' controller='GuildList'}pageNo={@$pageNo}&sortField=guildID&sortOrder={if $sortField == 'guildID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.member.gameID{/lang}</a></th>
+					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link application='guild' controller='GuildList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.guild.name{/lang}</a></th>
 
 					{event name='columnHeads'}
 				</tr>
@@ -34,16 +43,20 @@
 			
 			<tbody>
 				{foreach from=$objects item=guild}
-					<tr class="jsGuildMemberListRow" data-game-id="{@$guild->guildID}">
+					<tr class="jsGuildListRow guildRow" data-game-id="{@$guild->guildID}">
 						<td class="columnIcon">
                             {if $__wcf->session->getPermission('admin.guild.canManageGuild')}
-								<span class="icon icon16 fa-{if $guild->isActive}check-{/if}square-o jsEnableButton jsTooltip pointer jsGuildButton" title="{lang}wcf.acp.user.{if $guild->isActive}disable{else}enable{/if}{/lang}" data-member-id="{@$guild->guildID}" data-enable-message="{lang}wcf.acp.user.enable{/lang}" data-disable-message="{lang}wcf.acp.user.disable{/lang}" data-enabled="{if $guild->isActive}true{else}false{/if}"></span>
+                                <span class="icon icon16 fa-{if $guild->isActive}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $guild->isActive}disable{else}enable{/if}{/lang}" data-object-id="{@$guild->guildID}"></span>
 								<a href="{link application='guild' controller='GuildEdit' id=$guild->guildID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$guild->guildID}" data-confirm-message-html="{lang __encode=true}guild.acp.game.delete.sure{/lang}"></span>
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$guild->guildID}" data-confirm-message-html="{lang __encode=true}guild.acp.guild.delete.sure{/lang}"></span>
                             {/if}
                             {if $__wcf->session->getPermission('admin.guild.canManageMember')}
 								<a href="{link application='guild' controller='MemberList' id=$guild->guildID}{/link}" title="{lang}guild.acp.member.list{/lang}" class="jsTooltip"><span class="icon icon16 fa-user"></span></a>
                             {/if}
+
+							{foreach from=$guild->getGame()->getApiClassGuildButtons() item=button}
+								<a href="{link application="guild" controller=$button['controller'] id=$guild->guildID}{/link}"><span title="{lang}{$button['title']}{/lang}" class="jsTooltip icon icon16 {$button['icon']}"></span></a>
+							{/foreach}
 
 							{event name='rowButtons'}
 						</td>

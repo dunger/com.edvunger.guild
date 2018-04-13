@@ -21,7 +21,14 @@ class GuildHandler extends SingletonFactory {
      * @return	Guild|null
      */
     public function getGuilds() {
-        return $this->guilds;
+        $guilds = [];
+        foreach ($this->guilds as $guild){
+            if ($guild->getGame()->isActive == true) {
+                $guilds[$guild->guildID] = $guild;
+            }
+        }
+
+        return (sizeof($guilds) ? $guilds : null);
     }
 
     /**

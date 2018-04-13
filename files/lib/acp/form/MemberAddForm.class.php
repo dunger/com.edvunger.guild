@@ -12,7 +12,7 @@ use wcf\data\user\group\UserGroupList;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\form\AbstractForm;
-use wcf\system\exception\ErrorException;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -118,34 +118,19 @@ class MemberAddForm extends AbstractForm {
     /**
      * @inheritDoc
      */
-    public $groupIDs = [];
-
-    /**
-     * @inheritDoc
-     */
-    public function readData() {
-        parent::readData();
+    public function readParameters() {
+        parent::readParameters();
 
         if (isset($_REQUEST['id'])) $this->guildID = intval($_REQUEST['id']);
         $this->guild = new Guild($this->guildID);
 
         if (!$this->guild->guildID) {
-            throw new PermissionDeniedException();
+            throw new IllegalLinkException();
         }
 
         if ($this->guild->getGame()->apiClass) {
-            throw new PermissionDeniedException();
+            throw new IllegalLinkException();
         }
-
-        $this->roleList = new RoleList();
-        $this->roleList->getActive($this->guild->gameID);
-
-        $this->userGroupList = new UserGroupList();
-        $this->userGroupList->getConditionBuilder()->add('groupType NOT IN (?)', [[UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]]);
-        $this->userGroupList->readObjects();
-
-        $this->avatarList = new AvatarList();
-        $this->avatarList->getActiveByGame($this->guild->gameID);
     }
 
     /**
@@ -163,6 +148,23 @@ class MemberAddForm extends AbstractForm {
         if (isset($_POST['isMain'])) $this->isMain = ($_POST['isMain'] == 1) ? true : false;
         if (isset($_POST['isActive'])) $this->isActive = ($_POST['isActive'] == 1) ? true : false;
         if (isset($_POST['isApiActive'])) $this->isApiActive = ($_POST['isApiActive'] == 1) ? true : false;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function readData() {
+        parent::readData();
+
+        $this->roleList = new RoleList();
+        $this->roleList->getActive($this->guild->gameID);
+
+        $this->userGroupList = new UserGroupList();
+        $this->userGroupList->getConditionBuilder()->add('groupType NOT IN (?)', [[UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]]);
+        $this->userGroupList->readObjects();
+
+        $this->avatarList = new AvatarList();
+        $this->avatarList->getActiveByGame($this->guild->gameID);
     }
 
     /**
@@ -217,16 +219,12 @@ class MemberAddForm extends AbstractForm {
                     throw new UserInputException('groupID', 'invalid');
                     //throw new ErrorException(WCF::getLanguage()->get('guild.acp.error.group.permissionDenied'));
                 }
-
-                $this->groupIDs = array_merge([$group->groupID], $this->user->getGroupIDs());
-                $this->groupIDs = array_unique($this->groupIDs);
             } else {
                 $this->groupID = null;
             }
         } else {
             $this->user = null;
             $this->groupID = null;
-            $this->groupIDs = [];
         }
 
         $role = new Role($this->roleID);
@@ -267,9 +265,11 @@ class MemberAddForm extends AbstractForm {
         /** @var Member $member */
         $this->objectAction->executeAction()['returnValues'];
 
-        if ($this->groupID !== null && !empty($this->groupIDs)) {
-            $action = new UserAction([$this->user], 'update', [
-                'groups' => $this->groupIDs
+        if ($this->groupID !== null && $this->user !== null) {
+            $action = new UserAction([$this->user->userID], 'addToGroups', [
+                'groups' => [$this->groupID],
+                'deleteOldGroups' => false,
+                'addDefaultGroups' => false
             ]);
             $action->executeAction();
         }

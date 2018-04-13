@@ -2,16 +2,9 @@
 
 {if $objects|count}
     <script data-relocate="true">
-        require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
-            new UiSortableList({
-                containerId: 'instanceList',
-                className: 'guild\\data\\wow\\instance\\InstanceAction',
-                offset: {@$startIndex}
-            });
-        });
-
         $(function() {
-            new WCF.Action.Delete('guild\\data\\wow\\instance\\InstanceAction', $('.instanceRow'));
+            new WCF.Action.Toggle('guild\\data\\wow\\instance\\InstanceAction', '.guildWowInstanceRow');
+            new WCF.Action.Delete('guild\\data\\wow\\instance\\InstanceAction', '.guildWowInstanceRow');
         });
     </script>
 {/if}
@@ -24,6 +17,7 @@
     <nav class="contentHeaderNavigation">
         <ul>
             <li><a href="{link application='guild' controller='WowInstanceAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}guild.acp.game.wow.instance.add{/lang}</span></a></li>
+            <li><a href="{link application='guild' controller='GameList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}guild.acp.games{/lang}</span></a></li>
 
             {event name='contentHeaderNavigation'}
         </ul>
@@ -54,9 +48,10 @@
 
             <tbody>
             {foreach from=$objects item=instance}
-                <tr class="jsGuildWowInstanceListRow instanceRow" data-member-id="{@$instance->instanceID}">
+                <tr class="jsGuildWowInstanceListRow guildWowInstanceRow" data-member-id="{@$instance->instanceID}">
                     <td class="columnIcon">
                         {if $__wcf->session->getPermission('admin.guild.canManageGames')}
+                            <span class="icon icon16 fa-{if $instance->isActive}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $instance->isActive}disable{else}enable{/if}{/lang}" data-object-id="{@$instance->instanceID}"></span>
                             <a href="{link application="guild" controller='WowInstanceEdit' id=$instance->instanceID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>
                             <span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon icon16 fa-times" data-object-id="{@$instance->instanceID}" data-confirm-message-html="{lang __encode=true}guild.acp.game.wow.instance.delete.sure{/lang}"></span>
                         {/if}

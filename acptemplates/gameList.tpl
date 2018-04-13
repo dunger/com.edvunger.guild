@@ -1,5 +1,14 @@
 {include file='header' pageTitle='guild.acp.game.settings'}
 
+{if $objects|count}
+    <script data-relocate="true">
+        $(function() {
+            new WCF.Action.Toggle('guild\\data\\game\\GameAction', '.guildGameRow');
+            new WCF.Action.Delete('guild\\data\\game\\GameAction', '.guildGameRow');
+        });
+    </script>
+{/if}
+
 <header class="contentHeader">
     <div class="contentHeaderTitle">
         <h1 class="contentTitle">{lang}guild.acp.game.settings{/lang}</h1>
@@ -32,10 +41,15 @@
 
             <tbody>
             {foreach from=$objects item=game}
-                <tr class="jsGuildGameListRow gameRow" data-member-id="{@$game->gameID}">
+                <tr class="jsGuildGameListRow guildGameRow" data-member-id="{@$game->gameID}">
                     <td class="columnIcon">
                         {if $__wcf->session->getPermission('admin.guild.canManageGames')}
+                            <span class="icon icon16 fa-{if $game->isActive}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $game->isActive}disable{else}enable{/if}{/lang}" data-object-id="{@$game->gameID}"></span>
                             <a href="{link application="guild" controller='GameEdit' id=$game->gameID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>
+
+                            {foreach from=$game->getApiClassButtons() item=button}
+                                <a href="{link application="guild" controller=$button['controller'] id=$game->gameID}{/link}"><span title="{lang}{$button['title']}{/lang}" class="jsTooltip icon icon16 {$button['icon']}"></span></a>
+                            {/foreach}
                         {/if}
 
                         {event name='rowButtons'}

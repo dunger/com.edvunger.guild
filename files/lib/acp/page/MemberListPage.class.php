@@ -6,8 +6,7 @@ use guild\data\guild\Guild;
 use guild\data\role\RoleList;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupList;
-use wcf\system\event\EventHandler;
-use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 use wcf\page\SortablePage;
 
@@ -99,33 +98,10 @@ class MemberListPage extends SortablePage {
         $this->guild = new Guild($this->guildID);
 
         if (!$this->guild->guildID) {
-            throw new PermissionDeniedException();
+            throw new IllegalLinkException();
         }
 
         $this->objectList->getConditionBuilder()->add('guildID = ?', [$this->guild->guildID]);
-
-		// call validateSortField event
-		EventHandler::getInstance()->fireAction($this, 'validateSortField');
-		
-		if (!in_array($this->sortField, $this->validSortFields)) {
-			$this->sortField = $this->defaultSortField;
-		}
-		// call validateSortOrder event
-		EventHandler::getInstance()->fireAction($this, 'validateSortOrder');
-		
-		switch ($this->sortOrder) {
-			case 'ASC':
-			case 'DESC':
-			break;
-			
-			default:
-				$this->sortOrder = $this->defaultSortOrder;
-		}
-		
-		if ($this->sortField != 'name') {
-			$this->sqlOrderBy = $this->sortField . " " . $this->sortOrder . ", name ASC";
-			$this->sortField = $this->sortOrder = '';
-		}
 	}
 	
 	/**
@@ -156,7 +132,7 @@ class MemberListPage extends SortablePage {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-		
+
 		WCF::getTPL()->assign([
 		    'editable'      => (empty($this->game->apiClass)) ? true : false,
 		    'guild'         => $this->guild,

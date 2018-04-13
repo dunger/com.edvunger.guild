@@ -2,10 +2,10 @@
 namespace guild\acp\form;
 use guild\data\guild\Guild;
 use guild\data\member\Member;
-use guild\data\member\MemberAction;
+use wcf\data\user\UserAction;
 use wcf\form\AbstractForm;
 use wcf\system\cache\runtime\UserRuntimeCache;
-use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 
 /**
@@ -60,20 +60,16 @@ class MemberEditForm extends MemberAddForm {
         $this->guild = new Guild($this->guildID);
 
         if (!$this->guild->guildID) {
-            throw new PermissionDeniedException();
+            throw new IllegalLinkException();
         }
 
         if ($this->guild->getGame()->apiClass) {
-            throw new PermissionDeniedException();
+            throw new IllegalLinkException();
         }
 
         $this->member = Member::getMember($this->memberID, $this->guild->guildID);
         if (!$this->member->memberID) {
-            throw new PermissionDeniedException();
-        }
-
-        if ($this->member->userID !== null) {
-            $this->user = UserRuntimeCache::getInstance()->getObject($this->member->userID);
+            throw new IllegalLinkException();
         }
     }
 
@@ -82,6 +78,10 @@ class MemberEditForm extends MemberAddForm {
      */
     public function readData() {
         parent::readData();
+
+        if ($this->member->userID !== null) {
+            $this->user = UserRuntimeCache::getInstance()->getObject($this->member->userID);
+        }
 
         $this->name = $this->member->name;
         $this->thumbnail = $this->member->thumbnail;
@@ -100,22 +100,73 @@ class MemberEditForm extends MemberAddForm {
     public function save() {
         AbstractForm::save();
 
-        // create board
-        $this->objectAction = new MemberAction([$this->member], 'update', ['data' => [
-            'memberID' => $this->member->memberID,
-            'guildID' => $this->guild->guildID,
-            'name' => $this->name,
-            'thumbnail' => '',
-            'userID' => ($this->user === null) ? null : $this->user->userID,
-            'groupID' => $this->groupID,
-            'roleID' => $this->roleID,
-            'avatarID' => $this->avatarID,
-            'isMain' => $this->isMain ? 1 : 0,
-            'isActive' => $this->isActive ? 1 : 0,
-            'isApiActive' => $this->isApiActive ? 1 : 0
-        ]]);
-        /** @var member $member */
-        $this->objectAction->executeAction()['returnValues'];
+        // update user group
+        if ($this->user === null && $this->member->userID !== null && $this->member->groupID !== null) {
+            $action = new UserAction([$this->member->userID], 'removeFromGroups', [
+                'groups' => [$this->member->groupID]
+            ]);
+            $action->executeAction();
+        } else if ($this->user !== null && $this->member->userID == null && $this->groupID !== null) {
+            $action = new UserAction([$this->user->userID], 'addToGroups', [
+                'groups' => [$this->groupID],
+                'deleteOldGroups' => false,
+                'addDefaultGroups' => false
+            ]);
+            $action->executeAction();
+        } else if ($this->user->userID != $this->member->userID) {
+            if ($this->user !== null && $this->groupID !== null) {
+                $action = new UserAction([$this->user->userID], 'addToGroups', [
+                    'groups' => [$this->groupID],
+                    'deleteOldGroups' => false,
+                    'addDefaultGroups' => false
+                ]);
+                $action->executeAction();
+            }
+
+            if ($this->member->userID !== null && $this->member->groupID !== null) {
+                $action = new UserAction([$this->member->userID], 'removeFromGroups', [
+                    'groups' => [$this->member->groupID]
+                ]);
+                $action->executeAction();
+            }
+        } else if ($this->user !== null && $this->member->groupID != $this->groupID) {
+            $action = new UserAction([$this->user->userID], 'removeFromGroups', [
+                'groups' => [$this->member->groupID]
+            ]);
+            $action->executeAction();
+
+            $action = new UserAction([$this->user->userID], 'addToGroups', [
+                'groups' => [$this->groupID],
+                'deleteOldGroups' => false,
+                'addDefaultGroups' => false
+            ]);
+            $action->executeAction();
+        }
+
+        // update member
+        $sql = "UPDATE	guild".WCF_N."_member
+                    SET	name = ?,
+                        userID = ?,
+                        groupID = ?,
+                        roleID = ?,
+                        avatarID = ?,
+                        isMain = ?,
+                        isActive = ?,
+                        isApiActive = 0
+                    WHERE	memberID = ?
+                    AND     guildID = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([
+            $this->name,
+            ($this->user === null) ? null : $this->user->userID,
+            $this->groupID,
+            $this->roleID,
+            $this->avatarID,
+            $this->isMain,
+            $this->isActive ? 1 : 0,
+            $this->member->memberID,
+            $this->guild->guildID
+        ]);
 
         $this->member = Member::getMember($this->member->memberID, $this->guild->guildID);
 

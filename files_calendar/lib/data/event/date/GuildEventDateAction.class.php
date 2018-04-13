@@ -96,7 +96,16 @@ class GuildEventDateAction extends EventDateAction {
             'memberList' => ($memberList != null && $memberList->objectIDs) ? $memberList : null,
         ]);
 
-        return parent::getParticipationForm();
+        /*
+         * in wsc 3.1 we can show the form directly
+         */
+        if (version_compare(PACKAGE_VERSION, '3.1', '>')) {
+            return parent::getParticipationForm();
+        }
+
+        $data = parent::getParticipationForm();
+        $data['template'] = WCF::getTPL()->fetch(($this->eventDateEditor->canAddParticipant() ? 'guildEventDateParticipationFormOwner' : 'guildEventDateParticipationForm'), 'calendar');
+        return $data;
     }
 
     /**
@@ -122,7 +131,7 @@ class GuildEventDateAction extends EventDateAction {
 
         $guild = GuildHandler::getInstance()->getGuild($guildID);
 
-        $userIDs = [];
+        $userIDs = $memberIDs = [];
         $decisionYes = $decisionMaybe = $decisionNo = 0;
 
         if (isset($participantList->objects)) {

@@ -207,8 +207,7 @@ WCF.ACP.Guild.Member.EnableHandler = {
 			var $member = $('tr[data-member-id="' + data.objectIDs[i] + '"]');
 			if (data.actionName == 'disable') {
 				$member.find('.jsEnableButton').attr('data-enabled', false).data('enabled', false).attr('data-tooltip', $member.find('.jsEnableButton').data('enableMessage')).removeClass('fa-check-square-o').addClass('fa-square-o');
-			}
-			else if (data.actionName == 'enable') {
+			} else if (data.actionName == 'enable') {
 				$member.find('.jsEnableButton').attr('data-enabled', true).data('enabled', true).attr('data-tooltip', $member.find('.jsEnableButton').data('disableMessage')).removeClass('fa-square-o').addClass('fa-check-square-o');
 			} else if (data.actionName == 'setUser') {
 				$member.find('.columnUserName > .columnUserNameText > .columnUserNameTextData').html(data.returnValues);

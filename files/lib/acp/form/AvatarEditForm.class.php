@@ -3,8 +3,9 @@ namespace guild\acp\form;
 use guild\data\avatar\Avatar;
 use guild\data\avatar\AvatarAction;
 use guild\data\wow\instance\Instance;
+use guild\system\avatar\AvatarHandler;
 use wcf\form\AbstractForm;
-use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 
 /**
@@ -46,7 +47,7 @@ class AvatarEditForm extends AvatarAddForm {
         $this->avatar = new Avatar($this->avatarID);
 
         if (!$this->avatar->avatarID) {
-            throw new PermissionDeniedException();
+            throw new IllegalLinkException();
         }
     }
 
@@ -81,6 +82,8 @@ class AvatarEditForm extends AvatarAddForm {
         /** @var Instance $instance */
         $this->objectAction->executeAction()['returnValues'];
         $this->avatar = new Avatar($this->avatarID);
+
+        AvatarHandler::getInstance()->reloadCache();
 
         // show success message
         WCF::getTPL()->assign('success', true);

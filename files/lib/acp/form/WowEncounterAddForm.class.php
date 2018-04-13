@@ -1,5 +1,6 @@
 <?php
 namespace guild\acp\form;
+use guild\data\wow\encounter\Encounter;
 use guild\data\wow\encounter\EncounterAction;
 use guild\data\wow\instance\Instance;
 use guild\data\wow\instance\InstanceList;
@@ -23,7 +24,7 @@ class WowEncounterAddForm extends AbstractForm {
     /**
      * @inheritDoc
      */
-    public $activeMenuItem = 'guild.acp.menu.game.wow';
+    public $activeMenuItem = 'guild.acp.menu.game.list';
 
     /**
      * @inheritDoc
@@ -48,12 +49,27 @@ class WowEncounterAddForm extends AbstractForm {
     /**
      * @inheritDoc
      */
+    public $instanceList = null;
+
+    /**
+     * @inheritDoc
+     */
     public function readFormParameters() {
         parent::readFormParameters();
 
         if (isset($_POST['encounterID'])) $this->encounterID = intval($_POST['encounterID']);
         if (isset($_POST['instanceID'])) $this->instanceID = intval($_POST['instanceID']);
         if (isset($_POST['name'])) $this->name = StringUtil::trim($_POST['name']);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function readData() {
+        parent::readData();
+
+        $this->instanceList = new InstanceList();
+        $this->instanceList->getInstances();
     }
 
     /**
@@ -93,7 +109,7 @@ class WowEncounterAddForm extends AbstractForm {
 
         // reset values
         $this->name = '';
-        $this->instanceID = 0;
+        $this->instanceID = $this->encounterID = 0;
 
         // show success message
         WCF::getTPL()->assign('success', true);
@@ -105,15 +121,12 @@ class WowEncounterAddForm extends AbstractForm {
     public function assignVariables() {
         parent::assignVariables();
 
-        $instanceList = new InstanceList();
-        $instanceList->getInstances();
-
         WCF::getTPL()->assign([
             'action' => 'add',
             'name' => $this->name,
             'encounterID' => $this->encounterID,
             'instanceID' => $this->instanceID,
-            'instanceList' => $instanceList
+            'instanceList' => $this->instanceList
         ]);
     }
 }

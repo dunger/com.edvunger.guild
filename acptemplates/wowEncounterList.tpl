@@ -2,14 +2,6 @@
 
 {if $objects|count}
     <script data-relocate="true">
-        require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
-            new UiSortableList({
-                containerId: 'instanceList',
-                className: 'guild\\data\\wow\\encounter\\EncounterAction',
-                offset: {@$startIndex}
-            });
-        });
-
         $(function() {
             new WCF.Action.Delete('guild\\data\\wow\\encounter\\EncounterAction', $('.encounterRow'));
         });
@@ -24,6 +16,7 @@
     <nav class="contentHeaderNavigation">
         <ul>
             <li><a href="{link application='guild' controller='WowEncounterAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}guild.acp.game.wow.encounter.add{/lang}</span></a></li>
+            <li><a href="{link application='guild' controller='GameList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}guild.acp.games{/lang}</span></a></li>
 
             {event name='contentHeaderNavigation'}
         </ul>
@@ -41,9 +34,9 @@
         <table class="table">
             <thead>
             <tr>
-                <th class="columnID columnEncounterID{if $sortField == 'instanceID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link application='guild' controller='WowEncounterList'}pageNo={@$pageNo}&sortField=instanceID&sortOrder={if $sortField == 'instanceID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.game.wow.instance.instanceID{/lang}</a></th>
+                <th class="columnID columnEncounterID{if $sortField == 'encounterID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link application='guild' controller='WowEncounterList'}pageNo={@$pageNo}&sortField=encounterID&sortOrder={if $sortField == 'encounterID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.game.wow.encounter.id{/lang}</a></th>
                 <th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link application='guild' controller='WowEncounterList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.game.wow.instance.name{/lang}</a></th>
-                <th class="columnText columnInstance{if $sortField == 'title'} active {@$sortOrder}{/if}"><a href="{link application='guild' controller='WowEncounterList'}pageNo={@$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.game.wow.instance{/lang}</a></th>
+                <th class="columnText columnInstance{if $sortField == 'instanceID'} active {@$sortOrder}{/if}"><a href="{link application='guild' controller='WowEncounterList'}pageNo={@$pageNo}&sortField=instanceID&sortOrder={if $sortField == 'instanceID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.game.wow.instance{/lang}</a></th>
 
                 {event name='columnHeads'}
             </tr>

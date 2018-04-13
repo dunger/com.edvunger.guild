@@ -1,7 +1,7 @@
 {include file='header' pageTitle='guild.acp.member.list'}
 
 {js application='guild' acp='true' file='WCF.ACP.Guild'}
-<script> //data-relocate="true">
+<script data-relocate="true">
     $(function() {
         {if $__wcf->session->getPermission('admin.guild.canManageMember')}
         WCF.ACP.Guild.Member.EnableHandler.init({$guild->guildID});
@@ -26,15 +26,14 @@
         <h1 class="contentTitle">{lang}guild.acp.member.list.from{/lang} {$guild->name}</h1>
     </div>
 
-    {if editable}
-        <nav class="contentHeaderNavigation">
-            <ul>
-                <li><a href="{link application='guild' controller='MemberAdd' id=$guild->guildID}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}guild.acp.member.add{/lang}</span></a></li>
+    <nav class="contentHeaderNavigation">
+        <ul>
+            {if $editable}<li><a href="{link application='guild' controller='MemberAdd' id=$guild->guildID}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}guild.acp.member.add{/lang}</span></a></li>{/if}
+            <li><a href="{link application='guild' controller='GuildList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}guild.acp.guild.list{/lang}</span></a></li>
 
-                {event name='contentHeaderNavigation'}
-            </ul>
-        </nav>
-    {/if}
+            {event name='contentHeaderNavigation'}
+        </ul>
+    </nav>
 </header>
 
 {hascontent}
@@ -59,9 +58,9 @@
 
             <tbody>
             {foreach from=$objects item=member}
-                <tr class="jsGuildMemberListRow" data-member-id="{@$member->memberID}">
+                <tr class="jsGuildMemberListRow guildMemberRow" data-member-id="{@$member->memberID}">
                     <td class="columnIcon">
-                        {if $__wcf->session->getPermission('admin.guild.canManageMember')}<span class="icon icon16 fa-{if $member->isActive}check-{/if}square-o jsEnableButton jsTooltip pointer {if $member->isActive && $member->isApiActive}disabled{else}jsGuildButton{/if}" title="{lang}wcf.acp.user.{if $member->active}disable{else}enable{/if}{/lang}" data-member-id="{@$member->memberID}" data-enable-message="{lang}wcf.acp.user.enable{/lang}" data-disable-message="{lang}wcf.acp.user.disable{/lang}" data-enabled="{if $member->active}false{else}true{/if}"></span>{/if}
+                        {if $__wcf->session->getPermission('admin.guild.canManageMember')}<span class="icon icon16 fa-{if $member->isActive}check-{/if}square-o jsEnableButton jsTooltip pointer {if $member->isActive && $member->isApiActive}disabled{else}jsGuildButton{/if}" title="{lang}wcf.acp.user.{if $member->isActive}disable{else}enable{/if}{/lang}" data-member-id="{@$member->memberID}" data-enable-message="{lang}wcf.acp.user.enable{/lang}" data-disable-message="{lang}wcf.acp.user.disable{/lang}" data-enabled="{if !$member->isActive}false{else}true{/if}"></span>{/if}
                         {if $editable}<a href="{link application="guild" controller='MemberEdit' id=$guild->guildID memberID=$member->memberID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>{/if}
                         {event name='rowButtons'}
                     </td>

@@ -150,9 +150,6 @@ class MemberAction extends AbstractDatabaseObjectAction {
             if (!UserGroup::isAccessibleGroup([$group->groupID])) {
                 throw new ErrorException(WCF::getLanguage()->get('guild.acp.error.group.permissionDenied'));
             }
-
-            $groupIDs = array_merge([$group->groupID], $user->getGroupIDs());
-            $groupIDs = array_unique($groupIDs);
         } else {
             $groupID = null;
         }
@@ -181,9 +178,11 @@ class MemberAction extends AbstractDatabaseObjectAction {
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$user->userID, $groupID, $role->roleID, $isMain, $member->memberID, $member->guildID]);
 
-        if ($groupID !== null && !empty($groupIDs)) {
-            $action = new UserAction([$user], 'update', [
-                'groups' => $groupIDs
+        if ($groupID !== null) {
+            $action = new UserAction([$user->userID], 'addToGroups', [
+                'groups' => [$groupID],
+                'deleteOldGroups' => false,
+                'addDefaultGroups' => false
             ]);
             $action->executeAction();
         }
@@ -218,7 +217,12 @@ class MemberAction extends AbstractDatabaseObjectAction {
             throw new ErrorException(WCF::getLanguage()->getDynamicVariable('wcf.user.username.error.notFound', ['username' => $member->userID]));
         }
 
-        $groupID = $member->groupID;
+        if ($member->groupID !== null) {
+            $action = new UserAction([$user->userID], 'removeFromGroups', [
+                'groups' => [$member->groupID]
+            ]);
+            $action->executeAction();
+        }
 
         $sql = "UPDATE	guild".WCF_N."_member
                     SET	userID = null,
@@ -229,13 +233,30 @@ class MemberAction extends AbstractDatabaseObjectAction {
                     AND     guildID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$member->memberID, $guild->guildID]);
+    }
 
-        if ($groupID !== null) {
-            $groupsIDs = array_diff($user->getGroupIDs(), [$member->groupID]);
-            $action = new UserAction([$user], 'update', [
-                'groups' => $groupsIDs
-            ]);
-            $action->executeAction();
+    /**
+     * @inheritDoc
+     */
+    public function validateToggle() {
+        parent::validateUpdate();
+
+        wcfDebug($this->getObjects());
+        $guildID = (int)$this->parameters['guildID'];
+        $memberID = (int)$this->parameters['memberID'];
+
+        if (!$memberID || !$guildID) {
+            throw new UserInputException('objectIDs', 'invalid');
+        }
+
+        $guild = GuildHandler::getInstance()->getGuild($guildID);
+        if ($guild === null) {
+            throw new UserInputException('objectIDs', 'invalid');
+        }
+
+        $member = Member::getMember($memberID, $guild->guildID);
+        if (!$member->memberID) {
+            throw new UserInputException('memberID', 'invalid');
         }
     }
 }

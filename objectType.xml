@@ -3,17 +3,17 @@
 	<import>
 		<!-- box controllers -->
 		<type>
-			<name>com.edvunger.guild.wow.raid.progress</name>
+			<name>com.edvunger.guild.instance.progress</name>
 			<definitionname>com.woltlab.wcf.boxController</definitionname>
-			<classname>guild\system\box\WowRaidProgressBoxController</classname>
+			<classname>guild\system\box\InstanceProgressBoxController</classname>
 		</type>
 		<!-- /box controllers -->
 		
 		<!-- raid progress box condition -->
 		<type>
-			<name>com.edvunger.guild.wow.raid.progress.guild</name>
-			<definitionname>com.edvunger.guild.box.wow.raid.progress.condition</definitionname>
-			<classname>guild\system\condition\WowRaidProgressCondition</classname>
+			<name>com.edvunger.guild.instance.progress</name>
+			<definitionname>com.edvunger.guild.box.instance.progress.condition</definitionname>
+			<classname>guild\system\condition\InstanceProgressCondition</classname>
 		</type>
 		<!-- /raid progress box condition -->
 		
@@ -27,4 +27,9 @@
 		</type>
 		<!-- /rebuild data workers -->
 	</import>
+	<delete>
+		<type name="com.edvunger.guild.wow.raid.progress">
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+		</type>
+	</delete>
 </data>

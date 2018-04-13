@@ -1,6 +1,8 @@
 <?php
 namespace guild\acp\form;
+use guild\data\avatar\Avatar;
 use guild\data\avatar\AvatarAction;
+use guild\system\avatar\AvatarHandler;
 use guild\system\game\GameHandler;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
@@ -62,6 +64,11 @@ class AvatarAddForm extends AbstractForm {
     /**
      * @inheritDoc
      */
+    public $gameList = null;
+
+    /**
+     * @inheritDoc
+     */
     public function readFormParameters() {
         parent::readFormParameters();
 
@@ -70,6 +77,15 @@ class AvatarAddForm extends AbstractForm {
         if (isset($_POST['image'])) $this->image = StringUtil::trim($_POST['image']);
         if (isset($_POST['autoAssignment'])) $this->autoAssignment = intval($_POST['autoAssignment']);
         if (isset($_POST['isActive'])) $this->isActive = ($_POST['isActive'] == 1) ? true : false;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function readData() {
+        parent::readData();
+
+        $this->gameList = GameHandler::getInstance()->getGames();
     }
 
     /**
@@ -87,7 +103,7 @@ class AvatarAddForm extends AbstractForm {
         }
 
         $game = GameHandler::getInstance()->getGame($this->gameID);
-        if (!$game->gameID) {
+        if ($game == null) {
             throw new UserInputException('gameID', 'invalid');
         }
     }
@@ -104,10 +120,12 @@ class AvatarAddForm extends AbstractForm {
             'name' => $this->name,
             'image' => $this->image,
             'autoAssignment' => $this->autoAssignment,
-            'isActive' => 1 //$this->isActive ? 1 : 0
+            'isActive' => $this->isActive ? 1 : 0
         ]]);
-        /** @var Instance $instance */
+        /** @var Avatar $avatar */
         $this->objectAction->executeAction()['returnValues'];
+
+        AvatarHandler::getInstance()->reloadCache();
 
         // reset values
         $this->name = $this->image = '';
@@ -124,8 +142,6 @@ class AvatarAddForm extends AbstractForm {
     public function assignVariables() {
         parent::assignVariables();
 
-        $gameList = GameHandler::getInstance()->getGames();
-
         WCF::getTPL()->assign([
             'action' => 'add',
             'avatarID' => 0,
@@ -134,7 +150,7 @@ class AvatarAddForm extends AbstractForm {
             'image' => $this->image,
             'autoAssignment' => $this->autoAssignment,
             'isActive' => $this->isActive,
-            'gameList' => $gameList
+            'gameList' => $this->gameList
         ]);
     }
 }

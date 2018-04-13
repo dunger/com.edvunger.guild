@@ -21,11 +21,6 @@
 			<permissions>admin.guild.canManageGuild</permissions>
 			<icon>fa-plus</icon>
 		</acpmenuitem>
-		<acpmenuitem name="guild.acp.menu.game.wow">
-			<controller>guild\acp\page\WowPage</controller>
-			<parent>guild.acp.menu.link</parent>
-			<permissions>admin.guild.canManageGames</permissions>
-		</acpmenuitem>
 		<acpmenuitem name="guild.acp.menu.avatar.list">
 			<controller>guild\acp\page\AvatarListPage</controller>
 			<parent>guild.acp.menu.link</parent>
@@ -38,4 +33,8 @@
 			<icon>fa-plus</icon>
 		</acpmenuitem>
 	</import>
+	
+	<delete>
+		<acpmenuitem name="guild.acp.menu.game.wow" />
+	</delete>
 </data>

@@ -4,6 +4,14 @@
     <div class="contentHeaderTitle">
         <h1 class="contentTitle">{lang}guild.acp.avatar.{$action}{/lang}</h1>
     </div>
+
+    <nav class="contentHeaderNavigation">
+        <ul>
+           <li><a href="{link application='guild' controller='AvatarList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}guild.acp.avatar.list{/lang}</span></a></li>
+
+            {event name='contentHeaderNavigation'}
+        </ul>
+    </nav>
 </header>
 
 

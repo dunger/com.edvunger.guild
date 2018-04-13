@@ -5,7 +5,7 @@ use guild\data\guild\Guild;
 use guild\data\guild\GuildAction;
 use guild\system\guild\GuildHandler;
 use wcf\form\AbstractForm;
-use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 use wcf\util\JSON;
 
@@ -48,7 +48,7 @@ class GuildEditForm extends GuildAddForm {
         $this->guild = new Guild($this->guildID);
 
         if (!$this->guild->guildID) {
-            throw new PermissionDeniedException();
+            throw new IllegalLinkException();
         }
     }
 
@@ -79,6 +79,8 @@ class GuildEditForm extends GuildAddForm {
         ]]);
         /** @var Guild $game */
         $this->objectAction->executeAction()['returnValues'];
+
+        $this->guild = new Guild($this->guildID);
 
         GuildHandler::getInstance()->reloadCache();
 

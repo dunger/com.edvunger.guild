@@ -5,7 +5,7 @@ use guild\data\game\GameAction;
 use guild\data\guild\Guild;
 use guild\system\game\GameHandler;
 use wcf\form\AbstractForm;
-use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -52,10 +52,34 @@ class GameEditForm extends AbstractForm {
     /**
      * @inheritDoc
      */
+    public function readParameters() {
+        parent::readParameters();
+
+        if (isset($_REQUEST['id'])) $this->gameID = intval($_REQUEST['id']);
+        $this->game = new Game($this->gameID);
+
+        if (!$this->game->gameID) {
+            throw new IllegalLinkException();
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function readFormParameters() {
         parent::readFormParameters();
 
         if (isset($_POST['apiKey'])) $this->apiKey = StringUtil::trim($_POST['apiKey']);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function readData() {
+        parent::readData();
+
+        $this->name = $this->game->name;
+        $this->apiKey = $this->game->apiKey;
     }
 
     /**
@@ -67,30 +91,6 @@ class GameEditForm extends AbstractForm {
         if (empty($this->apiKey)) {
             throw new UserInputException('apiKey', 'invalid');
         }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readParameters() {
-        parent::readParameters();
-
-        if (isset($_REQUEST['id'])) $this->gameID = intval($_REQUEST['id']);
-        $this->game = new Game($this->gameID);
-
-        if (!$this->game->gameID) {
-            throw new PermissionDeniedException();
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readData() {
-        parent::readData();
-
-        $this->name = $this->game->name;
-        $this->apiKey = $this->game->apiKey;
     }
 
     /**

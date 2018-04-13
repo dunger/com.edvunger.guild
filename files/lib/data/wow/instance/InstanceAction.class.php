@@ -1,6 +1,7 @@
 <?php
 namespace guild\data\wow\instance;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IToggleAction;
 
 /**
  * @author		David Unger <david@edv-unger.com>
@@ -8,7 +9,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @license		GPL <http://www.gnu.org/licenses/gpl-3.0>
  * @package		com.edvunger.guild
  */
-class InstanceAction extends AbstractDatabaseObjectAction {
+class InstanceAction extends AbstractDatabaseObjectAction implements IToggleAction {
     /**
      * @inheritDoc
      */
@@ -28,4 +29,20 @@ class InstanceAction extends AbstractDatabaseObjectAction {
      * @inheritDoc
      */
     public $className = InstanceEditor::class;
+
+    /**
+     * @inheritDoc
+     */
+    public function validateToggle() {
+        parent::validateUpdate();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toggle() {
+        foreach ($this->getObjects() as $instance) {
+            $instance->update(['isActive' => $instance->isActive ? 0 : 1]);
+        }
+    }
 }

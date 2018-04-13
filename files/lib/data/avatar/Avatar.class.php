@@ -1,8 +1,8 @@
 <?php
 namespace guild\data\avatar;
+use guild\system\avatar\AvatarHandler;
 use guild\system\game\GameHandler;
 use wcf\data\DatabaseObject;
-use wcf\system\category\AvatarHandler;
 use wcf\system\WCF;
 
 /**
@@ -25,15 +25,6 @@ class Avatar extends DatabaseObject {
         }
 
         return $this->game;
-    }
-
-    /**
-     * Returns the category object type of the category.
-     *
-     * @return	Avatar
-     */
-    public function getObjectType() {
-        return AvatarHandler::getInstance()->getObjectType($this->objectTypeID);
     }
 
     /**

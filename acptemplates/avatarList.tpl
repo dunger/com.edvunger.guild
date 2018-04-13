@@ -2,16 +2,9 @@
 
 {if $objects|count}
     <script data-relocate="true">
-        require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
-            new UiSortableList({
-                containerId: 'instanceList',
-                className: 'guild\\data\\avatar\\AvatarAction',
-                offset: {@$startIndex}
-            });
-        });
-
         $(function() {
-            new WCF.Action.Delete('guild\\data\\avatar\\AvatarAction', $('.avatarRow'));
+            new WCF.Action.Toggle('guild\\data\\avatar\\AvatarAction', '.guildAvatarRow');
+            new WCF.Action.Delete('guild\\data\\avatar\\AvatarAction', '.guildAvatarRow');
         });
     </script>
 {/if}
@@ -52,9 +45,10 @@
 
             <tbody>
             {foreach from=$objects item=avatar}
-                <tr class="jsGuildAvatarListRow avatarRow" data-member-id="{@$avatar->avatarID}">
+                <tr class="jsGuildAvatarListRow guildAvatarRow" data-member-id="{@$avatar->avatarID}">
                     <td class="columnIcon">
                         {if $__wcf->session->getPermission('admin.guild.canManageGames')}
+                            <span class="icon icon16 fa-{if $avatar->isActive}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $avatar->isActive}disable{else}enable{/if}{/lang}" data-object-id="{@$avatar->avatarID}"></span>
                             <a href="{link application="guild" controller='AvatarEdit' id=$avatar->avatarID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>
                             <span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon icon16 fa-times" data-object-id="{@$avatar->avatarID}" data-confirm-message-html="{lang __encode=true}guild.acp.avatar.delete.sure{/lang}"></span>
                         {/if}

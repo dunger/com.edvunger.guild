@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de">
 	<category name="wcf.acp.box">
-		<item name="wcf.acp.box.boxController.com.edvunger.guild.wow.raid.progress"><![CDATA[Gilden Progress]]></item>
+		<item name="wcf.acp.box.boxController.com.edvunger.guild.instance.progress"><![CDATA[Gilden Progress]]></item>
 	</category>
 
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.option.category.user.guild"><![CDATA[Gilde]]></item>
 		<item name="wcf.acp.group.option.user.guild.canViewMember"><![CDATA[Kann Gildenübersicht sehen]]></item>
 		<item name="wcf.acp.group.option.user.guild.canViewMemberDetails"><![CDATA[Kann Mitgliederdetails sehen]]></item>
+		<item name="wcf.acp.group.option.category.admin.guild"><![CDATA[Gilde]]></item>
+		<item name="wcf.acp.group.option.admin.guild.canManageGuild"><![CDATA[Kann Gilden verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.guild.canManageMember"><![CDATA[Kann Mitglieder verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.guild.canManageGames"><![CDATA[Kann Games verwalten]]></item>
 	</category>
 
 	<category name="wcf.acp.rebuildData">
@@ -23,6 +27,7 @@
 		<item name="guild.acp.avatar.edit"><![CDATA[Avatar bearbeiten]]></item>
 		<item name="guild.acp.avatar.gameID"><![CDATA[Game]]></item>
 		<item name="guild.acp.avatar.image"><![CDATA[Bild]]></item>
+		<item name="guild.acp.avatar.list"><![CDATA[Avatarliste]]></item>
 		<item name="guild.acp.avatar.name"><![CDATA[Name]]></item>
 		<item name="guild.acp.avatar.settings"><![CDATA[Avatar Einstellungen]]></item>
 		<item name="guild.acp.category.guild"><![CDATA[Gilde auswählen]]></item>
@@ -35,12 +40,25 @@
 		<item name="guild.acp.menu.member.list"><![CDATA[Mitglieder Verwaltung]]></item>
 		<item name="guild.acp.menu.game.wow"><![CDATA[WoW Einstellungen]]></item>
 		<item name="guild.acp.game"><![CDATA[Game]]></item>
+		<item name="guild.acp.games"><![CDATA[Games]]></item>
 		<item name="guild.acp.game.apiMinRank"><![CDATA[mindest Rank]]></item>
 		<item name="guild.acp.game.add"><![CDATA[Gilde hinzufügen]]></item>
 		<item name="guild.acp.game.apiKey"><![CDATA[API]]></item>
 		<item name="guild.acp.game.edit"><![CDATA[Game bearbeiten]]></item>
 		<item name="guild.acp.game.gameID"><![CDATA[ID]]></item>
 		<item name="guild.acp.game.guild"><![CDATA[Gilde]]></item>
+		<item name="guild.acp.game.instance"><![CDATA[Instanz]]></item>
+		<item name="guild.acp.game.instances"><![CDATA[Instanzen]]></item>
+		<item name="guild.acp.game.instance.add"><![CDATA[Instanz hinzufügen]]></item>
+		<item name="guild.acp.game.instance.edit"><![CDATA[Instanz bearbeiten]]></item>
+		<item name="guild.acp.game.instance.encounters"><![CDATA[Bosse]]></item>
+		<item name="guild.acp.game.instance.instanceID"><![CDATA[ID]]></item>
+		<item name="guild.acp.game.instance.kills"><![CDATA[Kills]]></item>
+		<item name="guild.acp.game.instance.kills.add"><![CDATA[Instanz hinzufügen]]></item>
+		<item name="guild.acp.game.instance.kills.id"><![CDATA[ID]]></item>
+		<item name="guild.acp.game.instance.kills.settings"><![CDATA[Instanz Progress verwalten]]></item>
+		<item name="guild.acp.game.instance.name"><![CDATA[Name]]></item>
+		<item name="guild.acp.game.instance.settings"><![CDATA[Instanz Einstellungen]]></item>
 		<item name="guild.acp.game.apiKey"><![CDATA[API Key]]></item>
 		<item name="guild.acp.game.locale"><![CDATA[Sprache]]></item>
 		<item name="guild.acp.game.region"><![CDATA[Region]]></item>
@@ -80,6 +98,7 @@
 		<item name="guild.acp.guild.add"><![CDATA[Gilde hinzufügen]]></item>
 		<item name="guild.acp.guild.apiGuild.description"><![CDATA[]]></item>
 		<item name="guild.acp.guild.edit"><![CDATA[Gilde bearbeiten]]></item>
+		<item name="guild.acp.guild.delete.sure"><![CDATA[Soll die Gilde wirklich gelöscht werden?]]></item>
 		<item name="guild.acp.guild.list"><![CDATA[Gildenliste]]></item>
 		<item name="guild.acp.guild.isActive"><![CDATA[Aktiv]]></item>
 		<item name="guild.acp.guild.name"><![CDATA[Gildenname]]></item>
