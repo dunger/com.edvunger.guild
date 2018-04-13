@@ -9,11 +9,11 @@
         <ol class="tabularList">
             <li class="tabularListRow tabularListRowHead">
                 <ol class="tabularListColumns">
-                    <li class="columnSubject{if $sortField === 'name'} active {@$sortOrder}{/if}"><a rel="nofollow" href="{link application='guild' controller='details' object=$guild}sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.user.name{/lang}</a></li>
-                    <li class="columnStats{if $sortField === 'role'} active {@$sortOrder}{/if}"><a rel="nofollow" href="{link application='guild' controller='details' object=$guild}sortField=role&sortOrder={if $sortField == 'role' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.user.role{/lang}</a></li>
-                    <li class="columnStats{if $sortField === 'gear'} active {@$sortOrder}{/if}"><a rel="nofollow" href="{link application='guild' controller='details' object=$guild}sortField=gear&sortOrder={if $sortField == 'gear' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.user.gear{/lang}</a></li>
-                    <li class="columnStats{if $sortField === 'al'} active {@$sortOrder}{/if}"><a rel="nofollow" href="{link application='guild' controller='details' object=$guild}sortField=al&sortOrder={if $sortField == 'al' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.user.weapon{/lang}</a></li>
-                    <li class="columnStats{if $sortField === 'ap'} active {@$sortOrder}{/if}"><a rel="nofollow" href="{link application='guild' controller='details' object=$guild}sortField=ap&sortOrder={if $sortField == 'ap' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.user.artefaktweapon{/lang}</a></li>
+                    <li class="columnSubject{if $sortField === 'name'} active {@$sortOrder}{/if}"><a rel="nofollow" href="{$guild->getLink()}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}">{lang}guild.user.name{/lang}</a></li>
+                    <li class="columnStats{if $sortField === 'role'} active {@$sortOrder}{/if}"><a rel="nofollow" href="{$guild->getLink()}&sortField=role&sortOrder={if $sortField == 'role' && $sortOrder == 'ASC'}DESC{else}ASC{/if}">{lang}guild.user.role{/lang}</a></li>
+                    <li class="columnStats{if $sortField === 'gear'} active {@$sortOrder}{/if}"><a rel="nofollow" href="{$guild->getLink()}&sortField=gear&sortOrder={if $sortField == 'gear' && $sortOrder == 'ASC'}DESC{else}ASC{/if}">{lang}guild.user.gear{/lang}</a></li>
+                    <li class="columnStats{if $sortField === 'al'} active {@$sortOrder}{/if}"><a rel="nofollow" href="{$guild->getLink()}&sortField=al&sortOrder={if $sortField == 'al' && $sortOrder == 'ASC'}DESC{else}ASC{/if}">{lang}guild.user.weapon{/lang}</a></li>
+                    <li class="columnStats{if $sortField === 'ap'} active {@$sortOrder}{/if}"><a rel="nofollow" href="{$guild->getLink()}&sortField=ap&sortOrder={if $sortField == 'ap' && $sortOrder == 'ASC'}DESC{else}ASC{/if}">{lang}guild.user.artefaktweapon{/lang}</a></li>
                 </ol>
             </li>
 
