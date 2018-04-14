@@ -53,7 +53,7 @@ class WowmemberPage extends AbstractPage {
         if (isset($_REQUEST['guildID'])) $this->guildID = intval($_REQUEST['guildID']);
         $this->member = Member::getMember($this->memberID, $this->guildID);
 
-        if ($this->member === null) {
+        if (!$this->member->memberID) {
             throw new IllegalLinkException();
         }
 

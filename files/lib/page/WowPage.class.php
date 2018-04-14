@@ -2,11 +2,10 @@
 namespace guild\page;
 use guild\data\game\Game;
 use guild\data\guild\Guild;
-use guild\data\guild\ViewableGuild;
 use guild\data\member\MemberList;
-use guild\system\cache\runtime\ViewableGuildRuntimeCache;
 use guild\system\guild\GuildHandler;
 use wcf\page\AbstractPage;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -33,13 +32,19 @@ class WowPage extends AbstractPage {
      * guild object
      * @var	Guild
      */
-    public $guild;
+    public $guild = null;
 
     /**
      * game object
      * @var	Game
      */
-    public $game;
+    public $game = null;
+
+    /**
+     * member object
+     * @var	MemberList
+     */
+    public $memberlist = null;
 
     /**
      * shown sortFields
@@ -70,8 +75,8 @@ class WowPage extends AbstractPage {
         if (isset($_REQUEST['guildID'])) $this->guildID = intval($_REQUEST['guildID']);
         $this->guild = GuildHandler::getInstance()->getGuild($this->guildID);
 
-        if (!$this->guild->guildID) {
-            throw new PermissionDeniedException();
+        if ($this->guild === null) {
+            throw new IllegalLinkException();
         }
 
         if (isset($_GET['sortField']) && in_array($_GET['sortField'], $this->sortFields)) {
