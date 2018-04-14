@@ -100,36 +100,42 @@ class MemberEditForm extends MemberAddForm {
     public function save() {
         AbstractForm::save();
 
-        // update user group
-        if ($this->user === null && $this->member->userID !== null && $this->member->groupID !== null) {
+        /*
+         * no group anymore
+         */
+        if ($this->groupID == null && $this->member->groupID !== null && $this->member->userID !== null) {
             $action = new UserAction([$this->member->userID], 'removeFromGroups', [
                 'groups' => [$this->member->groupID]
             ]);
             $action->executeAction();
-        } else if ($this->user !== null && $this->member->userID == null && $this->groupID !== null) {
+        }
+
+        /*
+         * new user has a group or current user has now a group
+         */
+        if ($this->groupID !== null && $this->user !== null && ($this->user->userID != $this->member->userID || $this->member->groupID === null)) {
             $action = new UserAction([$this->user->userID], 'addToGroups', [
                 'groups' => [$this->groupID],
                 'deleteOldGroups' => false,
                 'addDefaultGroups' => false
             ]);
             $action->executeAction();
-        } else if ($this->user->userID != $this->member->userID) {
-            if ($this->user !== null && $this->groupID !== null) {
-                $action = new UserAction([$this->user->userID], 'addToGroups', [
-                    'groups' => [$this->groupID],
-                    'deleteOldGroups' => false,
-                    'addDefaultGroups' => false
-                ]);
-                $action->executeAction();
-            }
+        }
 
-            if ($this->member->userID !== null && $this->member->groupID !== null) {
-                $action = new UserAction([$this->member->userID], 'removeFromGroups', [
-                    'groups' => [$this->member->groupID]
-                ]);
-                $action->executeAction();
-            }
-        } else if ($this->user !== null && $this->member->groupID != $this->groupID) {
+        /*
+         * remove current user from group because there is a new user
+         */
+        if ($this->member->groupID !== null && $this->user !== null && $this->user->userID != $this->member->userID) {
+            $action = new UserAction([$this->member->userID], 'removeFromGroups', [
+                'groups' => [$this->member->groupID]
+            ]);
+            $action->executeAction();
+        }
+
+        /*
+         * new group for the current user?
+         */
+        if ($this->member->groupID !== null && $this->groupID !== null && $this->user !== null && $this->user->userID == $this->member->userID && $this->groupID != $this->member->groupID) {
             $action = new UserAction([$this->user->userID], 'removeFromGroups', [
                 'groups' => [$this->member->groupID]
             ]);
