@@ -15,15 +15,18 @@ use wcf\util\JSON;
  *
  * @property-read	integer		    $guildID	    unique id of the guild
  * @property-read	string		    $name		    name of the guild
- * @property-read	integer     	$gameID	        id to which the guild belongs
+ * @property-read	integer     	$gameID	        game id to which the guild belongs
  * @property-read	string		    $apiLocale	    Api locale settings
  * @property-read	string	        $apiRegion		Api region settings
- * @property-read	string|         $apiGuild	    Api name of the guild to sync
+ * @property-read	string          $apiGuild	    Api name of the guild to sync
  * @property-read	string|null     $apiServer	    Api server if needed
  * @property-read	integer     	$apiMinRank	    Api min rank (wow) if needed
  * @property-read	integer		    $isActive	    is 1 if the guild is active
  */
 class Guild extends DatabaseObject implements IRouteController {
+    /**
+     * @inheritDoc
+     */
 	public $member = [];
 
     /**

@@ -9,6 +9,11 @@ use wcf\system\WCF;
  * @copyright	2018 David Unger
  * @license		GPL <http://www.gnu.org/licenses/gpl-3.0>
  * @package		com.edvunger.guild
+ *
+ * @property-read	integer		    $killsID	unique id of the instance kill
+ * @property-read	integer     	$guildID    guild id to which the kill belongs
+ * @property-read	integer     	$instanceID instance id to which the kill belongs
+ * @property-read	integer     	$kills      kill counter
  */
 class Kills extends DatabaseObject {
     /**

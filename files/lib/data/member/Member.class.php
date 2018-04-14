@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * @package		com.edvunger.guild
  *
  * @property-read	integer		    $memberID	    unique id of the member
- * @property-read	integer|null	$guildID        id of the guild the member belongs to
+ * @property-read	integer	        $guildID        id of the guild the member belongs to
  * @property-read	string		    $name		    name of the member
  * @property-read	string		    $thumbnail	    member thumbnail if exists
  * @property-read	integer|null	$userID		    id of the user the member belongs to or `null` if the user does not exist anymore

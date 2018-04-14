@@ -10,7 +10,7 @@ use wcf\data\DatabaseObject;
  *
  * @property-read	integer		    $roleID	    unique id of the role
  * @property-read	integer     	$gameID     id of the game the role belongs to
- * @property-read	string		    $name		name of the member
+ * @property-read	string		    $name		name of the role
  * @property-read	integer		    $isActive	is 1 if the role is active
  */
 class Role extends DatabaseObject {}

@@ -8,9 +8,16 @@ use wcf\system\WCF;
  * @copyright	2018 David Unger
  * @license		GPL <http://www.gnu.org/licenses/gpl-3.0>
  * @package		com.edvunger.guild
+ *
+ * @property-read	integer		    $instanceID	    unique id of the instance
+ * @property-read	string		    $name		    name of the instance
+ * @property-read	string		    $title		    title of the instance
+ * @property-read	integer     	$mapID	        map id of the instance
+ * @property-read	integer		    $isRaid	        is 1 if the instance is a raid
+ * @property-read	integer	        $difficulty		raid difficulty
+ * @property-read	integer		    $isActive	    is 1 if the instance is active
  */
 class Instance extends DatabaseObject {
-	
 	/**
 	 * @inheritDoc
 	 */

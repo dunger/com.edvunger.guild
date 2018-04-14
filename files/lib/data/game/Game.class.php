@@ -8,9 +8,15 @@ use wcf\data\DatabaseObject;
  * @copyright	2018 David Unger
  * @license		GPL <http://www.gnu.org/licenses/gpl-3.0>
  * @package		com.edvunger.guild
+ *
+ * @property-read	integer		    $gameID	    unique id of the game
+ * @property-read	string		    $name		name of the game
+ * @property-read	string		    $tag		tag of the game
+ * @property-read	string		    $apiClass	api class of the game
+ * @property-read	string		    $apiKey		api key of the game
+ * @property-read	integer		    $isActive   is 1 if the game is active
  */
 class Game extends DatabaseObject {
-
     /**
      * @inheritDoc
      */
