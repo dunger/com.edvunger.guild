@@ -125,3 +125,13 @@ body[data-template="wowmember"] .main {
   height: 100%;
   border-radius: 50px;
 }
+
+.sectionHeaderGuildMemberList {
+  margin-bottom: 5px !important;
+}
+
+.calendarParticipantGuildList > li,
+.memberGuildList > li {
+  padding: 0px 0px 5px !important;
+  border: none !important;
+}

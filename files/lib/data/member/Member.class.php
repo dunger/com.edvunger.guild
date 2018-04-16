@@ -24,9 +24,9 @@ use wcf\util\StringUtil;
  * @property-read	string		    $name		    name of the member
  * @property-read	string		    $thumbnail	    member thumbnail if exists
  * @property-read	integer|null	$userID		    id of the user the member belongs to or `null` if the user does not exist anymore
- * @property-read	integer|null	$groupID	    id of the group the member belongs to or `null` if the user does not exist anymore
- * @property-read	integer|null	$roleID		    id of the role the member belongs to or `null` if the user does not exist anymore
- * @property-read	integer|null	$rankID		    id of the rank the member belongs to or `null` if the user does not exist anymore
+ * @property-read	integer|null	$groupID	    id of the group the member belongs to or `null` if the group does not exist anymore
+ * @property-read	integer|null	$roleID		    id of the role the member belongs to or `null` if the role does not exist anymore
+ * @property-read	integer|null	avatarID	    id of the avatar the member belongs to or `null` if the avatar does not exist anymore
  * @property-read	integer		    $isMain	        is 1 if the member is main character
  * @property-read	integer		    $isActive	    is 1 if the member is active
  * @property-read	integer		    $isApiActive	is 1 if the member is active in the api

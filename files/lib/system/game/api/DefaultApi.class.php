@@ -12,6 +12,16 @@ class DefaultApi {
     /**
      * @inheritDoc
      */
+    private $pageGuild = 'guild';
+
+    /**
+     * @inheritDoc
+     */
+    private $pageMember = 'MemberPage';
+
+    /**
+     * @inheritDoc
+     */
     private $buttons = [
         'instance' => [
             'title' => 'guild.acp.game.instances',
@@ -35,6 +45,20 @@ class DefaultApi {
      * @inheritDoc
      */
     private $fields = [];
+
+    /**
+     * @inheritDoc
+     */
+    public function getPageGuild() {
+        return $this->pageGuild;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPageMember() {
+        return $this->pageMember;
+    }
 
     /**
      * @inheritDoc

@@ -4,6 +4,12 @@
 
 {include file='header'}
 
+<header class="contentHeader">
+    <div class="contentHeaderTitle">
+        <h1 class="contentTitle">{@$guild->name}</h1>
+    </div>
+</header>
+
 {if $memberList|count}
     <div class="section tabularBox messageGroupList guildMemberGroupList">
         <ol class="tabularList">

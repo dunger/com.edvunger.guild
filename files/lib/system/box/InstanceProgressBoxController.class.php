@@ -15,7 +15,6 @@ use wcf\system\WCF;
  */
 class InstanceProgressBoxController extends AbstractDatabaseObjectListBoxController {
     /**
-    /**
      * @inheritDoc
      */
     protected $conditionDefinition = 'com.edvunger.guild.box.instance.progress.condition';

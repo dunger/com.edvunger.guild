@@ -6,7 +6,7 @@
 				<p class="sectionDescription">{lang}calendar.event.participants.description{/lang}</p>
 			</header>
 
-			<header class="sectionHeader sectionHeaderParticipantRaid">
+			<header class="sectionHeader sectionHeaderParticipantGuild">
 				<ul class="containerBoxList quadrupleColumned calendarParticipantList">
 					{foreach from=$roleList item=role}
 						{if $role->roleID != 0}<li>{lang}{@$role->name}{/lang}</li>{/if}
@@ -21,7 +21,7 @@
 					<ul class="containerBoxList quadrupleColumned calendarParticipantList">
 						{foreach from=$roleList item=role}
 							<li>
-								<ol class="containerList calendarParticipantRaidList">
+								<ol class="containerList calendarParticipantGuildList">
 									{foreach from=$participantList item=participant}
 										{if $participant->decision == 'yes' && $participant->guildRoleID == $role->roleID && $participantData[$participant->userID]|isset}
 											<li class="jsParticipant" style="border: none; padding: 0;">
@@ -100,7 +100,7 @@
 				<p class="sectionDescription">{lang}calendar.event.undecidedParticipants.description{/lang}</p>
 			</header>
 
-			<header class="sectionHeader sectionHeaderParticipantRaid">
+			<header class="sectionHeader sectionHeaderParticipantGuild">
 				<ul class="containerBoxList quadrupleColumned calendarParticipantList">
 					{foreach from=$roleList item=role}
 						{if $role->roleID != 0}<li>{lang}{@$role->name}{/lang}</li>{/if}
@@ -113,7 +113,7 @@
 					<ul class="containerBoxList quadrupleColumned calendarParticipantList">
 						{foreach from=$roleList item=role}
 							<li>
-								<ol class="containerList calendarParticipantRaidList">
+								<ol class="containerList calendarParticipantGuildList">
 									{foreach from=$participantList item=participant}
 										{if $participant->decision == 'maybe' && $participant->guildRoleID == $role->roleID && $participantData[$participant->userID]|isset}
 											<li class="jsParticipant" style="border: none; padding: 0;">
@@ -191,7 +191,7 @@
 				<p class="sectionDescription">{lang}calendar.event.noParticipants.description{/lang}</p>
 			</header>
 
-			<header class="sectionHeader sectionHeaderParticipantRaid">
+			<header class="sectionHeader sectionHeaderParticipantGuild">
 				<ul class="containerBoxList quadrupleColumned calendarParticipantList">
 					{foreach from=$roleList item=role}
 						{if $role->roleID != 0}<li>{lang}{@$role->name}{/lang}</li>{/if}
@@ -204,7 +204,7 @@
 					<ul class="containerBoxList quadrupleColumned calendarParticipantList">
 						{foreach from=$roleList item=role}
 							<li>
-								<ol class="containerList calendarParticipantRaidList">
+								<ol class="containerList calendarParticipantGuildList">
 									{foreach from=$participantList item=participant}
 										{if $participant->decision == 'no' && $participant->guildRoleID == $role->roleID && $participantData[$participant->userID]|isset}
 											<li class="jsParticipant" style="border: none; padding: 0;">

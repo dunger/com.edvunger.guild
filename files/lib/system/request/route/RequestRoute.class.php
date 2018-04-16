@@ -58,6 +58,8 @@ class RequestRoute extends DynamicRequestRoute implements IRequestRoute {
             parent::init();
             return parent::matches($requestURL);
         } else {
+            $matches['controller'] = '';
+
             $guild = GuildHandler::getInstance()->getGuild($matches['guildID']);
             if ($guild === null) {
                 throw new IllegalLinkException();
@@ -65,15 +67,15 @@ class RequestRoute extends DynamicRequestRoute implements IRequestRoute {
 
             if (isset($matches['memberID'])) {
                 $member = new Member($matches['memberID']);
-                if ($member !== null) {
-                    $matches['controller'] = $guild->getGame()->detailsMemberPage;
+                if ($member->memberID) {
+                    $matches['controller'] = $guild->getGame()->getApiClass()->getPageMember();
                 }
-
             } else {
-                if (empty($guild->getGame()->detailsPage)) {
-                    throw new IllegalLinkException();
-                }
-                $matches['controller'] = $guild->getGame()->detailsPage;
+                $matches['controller'] = $guild->getGame()->getApiClass()->getPageGuild();
+            }
+
+            if (empty($matches['controller'])) {
+                throw new IllegalLinkException();
             }
 
             foreach ($matches as $key => $value) {

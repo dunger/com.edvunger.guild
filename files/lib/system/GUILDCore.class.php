@@ -1,6 +1,6 @@
 <?php
 namespace guild\system;
-use guild\page\MemberPage;
+use guild\page\GuildPage;
 use guild\system\request\route\RequestRoute;
 use wcf\system\application\AbstractApplication;
 use wcf\system\request\RouteHandler;
@@ -18,11 +18,11 @@ class GUILDCore extends AbstractApplication {
 	 * @see	\wcf\system\application\AbstractApplication::$abbreviation
 	 */
 	protected $abbreviation = 'guild';
-	
+
 	/**
 	 * @inheritDoc
 	 */
-	protected $primaryController = MemberPage::class;
+	protected $primaryController = GuildPage::class;
 	
 	/**
 	 * @see \wcf\system\application\AbstractApplication::__run()

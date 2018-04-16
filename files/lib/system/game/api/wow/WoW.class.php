@@ -16,6 +16,15 @@ use wcf\util\DateUtil;
  * @package		com.edvunger.guild
  */
 class WoW {
+    /**
+     * @inheritDoc
+     */
+    private $pageGuild = 'wow';
+
+    /**
+     * @inheritDoc
+     */
+    private $pageMember = 'wowmember';
 
     /**
      * @inheritDoc
@@ -362,6 +371,20 @@ class WoW {
         }
 
         return;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPageGuild() {
+        return $this->pageGuild;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPageMember() {
+        return $this->pageMember;
     }
 
     /**

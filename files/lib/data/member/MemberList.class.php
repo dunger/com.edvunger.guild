@@ -158,7 +158,10 @@ class MemberList extends DatabaseObjectList {
     /**
      * @inheritDoc
      */
-    public function getByGuildID($guildID) {
+    public function getByGuildID($guildID, $mainCharOnly=false) {
+        if ($mainCharOnly) {
+            parent::getConditionBuilder()->add('isMain = ?', [$mainCharOnly]);
+        }
         parent::getConditionBuilder()->add('isActive = 1', []);
         parent::getConditionBuilder()->add('guildID = ?', [$guildID]);
         parent::readObjects();

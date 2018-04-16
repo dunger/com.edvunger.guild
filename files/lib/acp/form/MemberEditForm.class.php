@@ -168,7 +168,7 @@ class MemberEditForm extends MemberAddForm {
             $this->groupID,
             $this->roleID,
             $this->avatarID,
-            $this->isMain,
+            $this->isMain ? 1 : 0,
             $this->isActive ? 1 : 0,
             $this->member->memberID,
             $this->guild->guildID
