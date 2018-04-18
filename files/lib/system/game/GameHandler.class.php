@@ -39,22 +39,6 @@ class GameHandler extends SingletonFactory {
     }
 
     /**
-     * Returns the game with the given tag or `null` if no such game exists.
-     *
-     * @param	string		$tag
-     * @return	Game|null
-     */
-    public function getGameByTag($tag) {
-        foreach ($this->games as $game) {
-            if ($game->tag == $tag) {
-                return $game;
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * @inheritDoc
      */
     protected function init() {

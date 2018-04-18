@@ -46,26 +46,9 @@ class GuildHandler extends SingletonFactory {
     }
 
     /**
-     * Returns the guild with the given gameTag or `null` if no such guild exists.
-     *
-     * @param	string		$tag
-     * @return	[]|null
-     */
-    public function getGuildByGameTag($tag) {
-        $guilds = [];
-        foreach ($this->guilds as $guild){
-            if ($guild->getGame()->tag == $tag) {
-                $guilds[$guild->guildID] = $guild;
-            }
-        }
-
-        return (sizeof($guilds) ? $guilds : null);
-    }
-
-    /**
      * Returns the guild with the given gameID or `null` if no such guild exists.
      *
-     * @param	string		$tag
+     * @param	integer		$gameID
      * @return	[]|null
      */
     public function getGuildByGameID($gameID) {

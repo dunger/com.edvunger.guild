@@ -10,6 +10,12 @@
 			<parent>guild.acp.menu.link</parent>
 			<permissions>admin.guild.canManageGames</permissions>
 		</acpmenuitem>
+		<acpmenuitem name="guild.acp.menu.game.add">
+			<controller>guild\acp\form\GameAddForm</controller>
+			<parent>guild.acp.menu.game.list</parent>
+			<permissions>admin.guild.canManageGames</permissions>
+			<icon>fa-plus</icon>
+		</acpmenuitem>
 		<acpmenuitem name="guild.acp.menu.guild.list">
 			<controller>guild\acp\page\GuildListPage</controller>
 			<parent>guild.acp.menu.link</parent>
@@ -29,6 +35,17 @@
 		<acpmenuitem name="guild.acp.menu.avatar.add">
 			<controller>guild\acp\form\AvatarAddForm</controller>
 			<parent>guild.acp.menu.avatar.list</parent>
+			<permissions>admin.guild.canManageGames</permissions>
+			<icon>fa-plus</icon>
+		</acpmenuitem>
+		<acpmenuitem name="guild.acp.menu.role.list">
+			<controller>guild\acp\page\RoleListPage</controller>
+			<parent>guild.acp.menu.link</parent>
+			<permissions>admin.guild.canManageGames</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="guild.acp.menu.role.add">
+			<controller>guild\acp\form\RoleAddForm</controller>
+			<parent>guild.acp.menu.role.list</parent>
 			<permissions>admin.guild.canManageGames</permissions>
 			<icon>fa-plus</icon>
 		</acpmenuitem>

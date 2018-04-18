@@ -15,7 +15,8 @@
     </div>
 
     <nav class="contentHeaderNavigation">
-        <ul>
+        <ul><li><a href="{link application='guild' controller='GameAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}guild.acp.game.add{/lang}</span></a></li>
+
             {event name='contentHeaderNavigation'}
         </ul>
     </nav>

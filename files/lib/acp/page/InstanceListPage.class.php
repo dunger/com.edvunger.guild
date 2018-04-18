@@ -61,8 +61,8 @@ class InstanceListPage extends SortablePage {
     /**
      * @inheritDoc
      */
-    public function readData() {
-        parent::readData();
+    protected function initObjectList() {
+        parent::initObjectList();
 
         if (isset($_REQUEST['id'])) $this->gameID = intval($_REQUEST['id']);
         $this->game = new Game($this->gameID);
@@ -70,6 +70,8 @@ class InstanceListPage extends SortablePage {
         if (!$this->game->gameID) {
             throw new IllegalLinkException();
         }
+
+        $this->objectList->getConditionBuilder()->add('gameID = ?', [$this->game->gameID]);
     }
 
     /**

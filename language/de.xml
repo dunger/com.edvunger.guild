@@ -34,15 +34,17 @@
 		<item name="guild.acp.menu.avatar.add"><![CDATA[Avatar hinzufügen]]></item>
 		<item name="guild.acp.menu.avatar.list"><![CDATA[Avatar Einstellungen]]></item>
 		<item name="guild.acp.menu.link"><![CDATA[Gilden Verwaltung]]></item>
+		<item name="guild.acp.menu.game.add"><![CDATA[Game hinzufügen]]></item>
 		<item name="guild.acp.menu.game.list"><![CDATA[Games]]></item>
 		<item name="guild.acp.menu.guild.add"><![CDATA[Gilde hinzufügen]]></item>
 		<item name="guild.acp.menu.guild.list"><![CDATA[Gildenliste]]></item>
 		<item name="guild.acp.menu.member.list"><![CDATA[Mitglieder Verwaltung]]></item>
+		<item name="guild.acp.menu.role.list"><![CDATA[Rollen Einstellungen]]></item>
 		<item name="guild.acp.menu.game.wow"><![CDATA[WoW Einstellungen]]></item>
 		<item name="guild.acp.game"><![CDATA[Game]]></item>
 		<item name="guild.acp.games"><![CDATA[Games]]></item>
 		<item name="guild.acp.game.apiMinRank"><![CDATA[mindest Rank]]></item>
-		<item name="guild.acp.game.add"><![CDATA[Gilde hinzufügen]]></item>
+		<item name="guild.acp.game.add"><![CDATA[Game hinzufügen]]></item>
 		<item name="guild.acp.game.apiKey"><![CDATA[API]]></item>
 		<item name="guild.acp.game.edit"><![CDATA[Game bearbeiten]]></item>
 		<item name="guild.acp.game.gameID"><![CDATA[ID]]></item>
@@ -59,6 +61,9 @@
 		<item name="guild.acp.game.instance.kills.settings"><![CDATA[Instanz Progress verwalten]]></item>
 		<item name="guild.acp.game.instance.name"><![CDATA[Name]]></item>
 		<item name="guild.acp.game.instance.settings"><![CDATA[Instanz Einstellungen]]></item>
+		<item name="guild.acp.game.apiClass"><![CDATA[API]]></item>
+		<item name="guild.acp.game.apiClass.default"><![CDATA[Standard]]></item>
+		<item name="guild.acp.game.apiClass.wow"><![CDATA[World of Warcraft]]></item>
 		<item name="guild.acp.game.apiKey"><![CDATA[API Key]]></item>
 		<item name="guild.acp.game.locale"><![CDATA[Sprache]]></item>
 		<item name="guild.acp.game.region"><![CDATA[Region]]></item>
@@ -121,6 +126,12 @@
 		<item name="guild.acp.member.error.hasChar"><![CDATA[Der User hat bereits einen Charakter zugeordnet]]></item>
 		<item name="guild.acp.member.error.character.notFound"><![CDATA[Der Charakter konnte nicht gefunden werden.]]></item>
 		<item name="guild.acp.member.error.role.notFound"><![CDATA[Die Rolle konnte nicht gefunden werden.]]></item>
+		<item name="guild.acp.role.add"><![CDATA[Rolle hinzufügen]]></item>
+		<item name="guild.acp.role.list"><![CDATA[Rollenliste]]></item>
+		<item name="guild.acp.role.gameID"><![CDATA[Game]]></item>
+		<item name="guild.acp.role.name"><![CDATA[Name]]></item>
+		<item name="guild.acp.role.roleID"><![CDATA[ID]]></item>
+		<item name="guild.acp.role.settings"><![CDATA[Rollen Einstellungen]]></item>
 	</category>
 
 	<category name="guild.user">
@@ -129,6 +140,7 @@
 		<item name="guild.user.calendar.missingParticipants"><![CDATA[Unangemeldete Teilnehmer]]></item>
 		<item name="guild.user.calendar.missingParticipants.description"><![CDATA[Die folgenden Benutzer haben sich für den Termin noch nicht angemeldet:]]></item>
 		<item name="guild.user.character.select"><![CDATA[Charakter auswählen]]></item>
+		<item name="guild.user.class"><![CDATA[Klasse]]></item>
 		<item name="guild.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="guild.user.avatar.wow.deamonhunter"><![CDATA[Deamon Hunter]]></item>
 		<item name="guild.user.avatar.wow.deathknight"><![CDATA[Todesritter]]></item>

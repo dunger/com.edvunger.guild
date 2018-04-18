@@ -17,11 +17,8 @@ DROP TABLE IF EXISTS guild1_game;
 CREATE TABLE guild1_game (
 	gameID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(50) NOT NULL DEFAULT '',
-	tag VARCHAR(10) NOT NULL DEFAULT '',
 	apiClass VARCHAR(100) NOT NULL DEFAULT '',
 	apiKey VARCHAR(100) NOT NULL DEFAULT '',
-	detailsPage VARCHAR(100) NOT NULL DEFAULT '',
-	detailsMemberPage VARCHAR(100) NOT NULL DEFAULT '',
 	isActive tinyint(1) NOT NULL DEFAULT '0',
 	UNIQUE KEY (name)
 );
@@ -102,10 +99,10 @@ CREATE TABLE guild1_wow_encounter_kills (
 DROP TABLE IF EXISTS guild1_wow_instance;
 CREATE TABLE guild1_wow_instance (
 	instanceID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	mapID INT(10) NOT NULL DEFAULT '0',
 	name VARCHAR(100) NOT NULL DEFAULT '',
-	isRaid tinyint(1) NOT NULL DEFAULT '0',
 	title VARCHAR(50) NOT NULL DEFAULT '',
+	mapID INT(10) NOT NULL DEFAULT '0',
+	isRaid tinyint(1) NOT NULL DEFAULT '0',
 	difficulty INT(10) NOT NULL DEFAULT '0',
 	isActive tinyint(1) NOT NULL DEFAULT '0'
 );
@@ -151,11 +148,11 @@ ALTER TABLE guild1_wow_statistic ADD FOREIGN KEY (memberID) REFERENCES guild1_me
 ALTER TABLE guild1_wow_statistic ADD FOREIGN KEY (guildID) REFERENCES guild1_guild (guildID) ON DELETE CASCADE;
 
 INSERT INTO guild1_game
-		(gameID, name, tag, apiClass, apiKey, detailsPage, detailsMemberPage, isActive)
-VALUES	(1, 'World of Warcraft', 'wow', 'guild\\system\\game\\api\\wow\\WoW', '', 'wow', 'wowmember', 1);
+		(gameID, name, apiClass, apiKey, isActive)
+VALUES	(1, 'World of Warcraft', 'guild\\system\\game\\api\\wow\\WoW', '', 1);
 INSERT INTO guild1_game
-		(gameID, name, tag, apiClass, apiKey, detailsPage, detailsMemberPage, isActive)
-VALUES	(2, 'Star Wars: The Old Republic', 'swtor', '', '', '', '', 1);
+		(gameID, name, apiClass, apiKey, isActive)
+VALUES	(2, 'Star Wars: The Old Republic', '', '', 1);
 
 INSERT INTO guild1_avatar
 		(avatarID, gameID, name, image, autoAssignment, isActive)

@@ -1,6 +1,5 @@
 <?php
 namespace guild\data\avatar;
-use guild\system\avatar\AvatarHandler;
 use guild\system\game\GameHandler;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
