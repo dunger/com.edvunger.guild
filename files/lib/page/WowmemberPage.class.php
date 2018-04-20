@@ -71,6 +71,7 @@ class WowmemberPage extends AbstractPage {
         $stats = new StatisticList();
         $this->member->stats = $stats->getStats([$this->member->memberID]);
 
+
         $tmp = [];
         $sql = "SELECT		statistic.week, instance.instanceID as instance, instance.title as instanceTitle, statistic_type.description, statistic.value as bossKills, encounter.name as encounterName
 				FROM		guild".WCF_N."_wow_statistic_type statistic_type

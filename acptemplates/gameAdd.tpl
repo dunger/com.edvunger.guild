@@ -18,6 +18,9 @@
             <dt><label for="name">{lang}guild.acp.game.name{/lang}</label></dt>
             <dd>
                 <input type="text" id="name" name="name" value="{if $name}{@$name}{/if}" class="long" min="5">
+                {if $errorField == 'name'}
+                    <small class="innerError">{lang}guild.acp.game.name.error.{$errorType}{/lang}</small>
+                {/if}
             </dd>
         </dl>
 
@@ -29,6 +32,9 @@
                     <option value="default"{if $apiClass == 'default'} selected{/if}>{lang}guild.acp.game.apiClass.default{/lang}</option>
                     <option value="wow"{if $apiClass == 'wow'} selected{/if}>{lang}guild.acp.game.apiClass.wow{/lang}</option>
                 </select>
+                {if $errorField == 'apiClass'}
+                    <small class="innerError">{lang}guild.acp.game.apiClass.error.{$errorType}{/lang}</small>
+                {/if}
             </dd>
         </dl>
 

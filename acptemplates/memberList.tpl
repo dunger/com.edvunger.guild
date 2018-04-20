@@ -49,7 +49,7 @@
             <tr>
                 <th class="columnID columnMemberID{if $sortField == 'memberID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link application='guild' controller='MemberList' object=$guild}pageNo={@$pageNo}&sortField=memberID&sortOrder={if $sortField == 'memberID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.member.memberID{/lang}</a></th>
                 <th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link application='guild' controller='MemberList' object=$guild}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.member.name{/lang}</a></th>
-                <th class="columnText columnUserName{if $sortField == 'userID'} active {@$sortOrder}{/if}"><a href="{link application='guild' controller='MemberList' object=$guild}pageNo={@$pageNo}&sortField=userID&sortOrder={if $sortField == 'userID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.member.user{/lang}</a></th>
+                <th class="columnText columnUsername{if $sortField == 'userID'} active {@$sortOrder}{/if}"><a href="{link application='guild' controller='MemberList' object=$guild}pageNo={@$pageNo}&sortField=userID&sortOrder={if $sortField == 'userID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.member.user{/lang}</a></th>
                 {if !$editable}<th class="columnText columnIsApiActive{if $sortField == 'isApiActive'} active {@$sortOrder}{/if}"><a href="{link application='guild' controller='MemberList' object=$guild}pageNo={@$pageNo}&sortField=isApiActive&sortOrder={if $sortField == 'isApiActive' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.member.isApiActive{/lang}</a></th>{/if}
 
                 {event name='columnHeads'}
@@ -66,7 +66,7 @@
                     </td>
                     <td class="columnID columnMemberID">{@$member->memberID}</td>
                     <td class="columnTitle columnName">{$member->name}</td>
-                    <td class="columnText columnUserName">
+                    <td class="columnText columnUsername">
                         <div class="columnUserNameText{if !$member->userID} invisible{/if}">
                             {if $member->userID}
                                 {if $__wcf->session->getPermission('admin.guild.canManageMember')}<span class="icon icon16 fa-remove jsGuildButton jsDeleteButton jsTooltip pointer" title="{lang}wcf.acp.user.delete{/lang}" data-member-id="{@$member->memberID}" data-deleteuser="true"></span>{/if}

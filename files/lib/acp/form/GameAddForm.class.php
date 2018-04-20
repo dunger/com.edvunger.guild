@@ -75,12 +75,12 @@ class GameAddForm extends AbstractForm {
         }
 
         $game = Game::getGameByName($this->name);
-        if ((!isset($this->game) && $game->gameID) || (isset($this->game) && $game->gameID != $this->game->gameID)) {
+        if ((!isset($this->game) && $game->gameID) || (isset($this->game) && $game->gameID !== 0 && $game->gameID != $this->game->gameID)) {
             throw new UserInputException('name', 'inUse');
         }
 
-        if (array_key_exists($this->apiClass, $this->apiData) === false) {
-            throw new UserInputException('apiClass', 'invalid');
+        if (array_key_exists($this->apiClass, $this->apiData) === false && $this->game === null) {
+            throw new UserInputException('apiClass', 'notFound');
         }
     }
 
@@ -95,6 +95,8 @@ class GameAddForm extends AbstractForm {
             'name' => $this->name,
             'apiClass' => $this->apiData[$this->apiClass],
             'apiKey' => $this->apiKey,
+            'detailsPage' => '',
+            'detailsMemberPage' => '',
             'isActive' => 1,
         ]]);
         /** @var Game $game */

@@ -34,7 +34,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th class="columnID columnAvatarID{if $sortField == 'roleID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link application='guild' controller='RoleList'}pageNo={@$pageNo}&sortField=avatarID&sortOrder={if $sortField == 'roleID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.role.roleID{/lang}</a></th>
+                <th class="columnID columnRoleID{if $sortField == 'roleID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link application='guild' controller='RoleList'}pageNo={@$pageNo}&sortField=roleID&sortOrder={if $sortField == 'roleID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.role.roleID{/lang}</a></th>
                 <th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link application='guild' controller='RoleList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.role.name{/lang}</a></th>
                 <th class="columnText columnGame{if $sortField == 'gameID'} active {@$sortOrder}{/if}"><a href="{link application='guild' controller='RoleList'}pageNo={@$pageNo}&sortField=gameID&sortOrder={if $sortField == 'gameID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.role.gameID{/lang}</a></th>
 
@@ -44,7 +44,7 @@
 
             <tbody>
             {foreach from=$objects item=role}
-                <tr class="jsGuildAvatarListRow guildAvatarRow" data-member-id="{@$role->roleID}">
+                <tr class="jsGuildRoleListRow guildRoleRow" data-member-id="{@$role->roleID}">
                     <td class="columnIcon">
                         {if $__wcf->session->getPermission('admin.guild.canManageGames')}
                             <!--<span class="icon icon16 fa-{if $role->isActive}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $role->isActive}disable{else}enable{/if}{/lang}" data-object-id="{@$role->roleID}"></span>-->
@@ -54,7 +54,7 @@
 
                         {event name='rowButtons'}
                     </td>
-                    <td class="columnID columnInstanceID">{@$role->roleID}</td>
+                    <td class="columnID columnRoleID">{@$role->roleID}</td>
                     <td class="columnTitle columnName">{lang}{$role->name}{/lang}</td>
                     <td class="columnText columnGame">{if $role->gameID}{$role->getGame()->name}{/if}</td>
 

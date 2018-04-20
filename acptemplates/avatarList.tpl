@@ -55,7 +55,7 @@
 
                         {event name='rowButtons'}
                     </td>
-                    <td class="columnID columnInstanceID">{@$avatar->avatarID}</td>
+                    <td class="columnID columnAvatarID">{@$avatar->avatarID}</td>
                     <td class="columnTitle columnName">{lang}{$avatar->name}{/lang}</td>
                     <td class="columnText columnGame">{if $avatar->gameID}{$avatar->getGame()->name}{/if}</td>
                     <td class="columnText columnImage">{$avatar->image}</td>

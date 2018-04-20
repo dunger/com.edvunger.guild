@@ -2,7 +2,7 @@
 
 <header class="contentHeader">
     <div class="contentHeaderTitle">
-        <h1 class="contentTitle">{lang}guild.acp.avatar.{$action}{/lang}</h1>
+        <h1 class="contentTitle">{lang}guild.acp.role.{$action}{/lang}</h1>
     </div>
 
     <nav class="contentHeaderNavigation">
@@ -27,6 +27,9 @@
             <dt><label for="name">{lang}guild.acp.role.name{/lang}</label></dt>
             <dd>
                 <input type="text" id="name" name="name" value="{if $name}{@$name}{/if}" class="long" min="5">
+                {if $errorField == 'name'}
+                    <small class="innerError">{lang}guild.acp.role.name.error.{$errorType}{/lang}</small>
+                {/if}
             </dd>
         </dl>
         <dl{if $errorField == 'gameID'} class="formError"{/if}>
@@ -38,6 +41,9 @@
                         <option value="{@$game->gameID}"{if $gameID == $game->gameID} selected{/if}>{@$game->name}</option>
                     {/foreach}
                 </select>
+                {if $errorField == 'gameID'}
+                    <small class="innerError">{lang}guild.acp.role.gameID.error.{$errorType}{/lang}</small>
+                {/if}
             </dd>
         </dl>
     </div>

@@ -33,7 +33,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th class="columnID columnEncounterID{if $sortField == 'gameID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link application='guild' controller='GameList'}pageNo={@$pageNo}&sortField=gameID&sortOrder={if $sortField == 'gameID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.game.gameID{/lang}</a></th>
+                <th class="columnID columnGameID{if $sortField == 'gameID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link application='guild' controller='GameList'}pageNo={@$pageNo}&sortField=gameID&sortOrder={if $sortField == 'gameID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.game.gameID{/lang}</a></th>
                 <th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link application='guild' controller='GameList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}guild.acp.game.name{/lang}</a></th>
 
                 {event name='columnHeads'}

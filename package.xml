@@ -6,8 +6,8 @@
 		<packagedescription><![CDATA[Add guild functions]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Fügt Gilden Funktionen hinzu.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>1.0.0 Beta 1</version>
-		<date>2018-04-18</date>
+		<version>1.0.0 Beta 3</version>
+		<date>2018-04-19</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -48,18 +48,45 @@
 
 	<instructions type="update" fromversion="0.2.0">
 		<instruction type="sql">update_0.2.1.sql</instruction>
+		<instruction type="sql">update_1.0.0_beta_2.sql</instruction>
 		<instruction type="file"/>
 		<instruction type="template" />
+		<instruction type="template" application="calendar">templates_calendar.tar</instruction>
 		<instruction type="acpTemplate" />
 		<instruction type="objectTypeDefinition" />
 		<instruction type="objectType" />
 		<instruction type="acpMenu" />
 		<instruction type="language" />
+		<instruction type="script">acp/install_com.edv-unger.guild.php</instruction>
 	</instructions>
 
 	<instructions type="update" fromversion="0.2.1">
+		<instruction type="sql">update_1.0.0_beta_2.sql</instruction>
 		<instruction type="file"/>
 		<instruction type="template"/>
+		<instruction type="template" application="calendar">templates_calendar.tar</instruction>
+		<instruction type="acpTemplate" />
+		<instruction type="language" />
 		<instruction type="acpMenu"/>
+		<instruction type="script">acp/install_com.edv-unger.guild.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="1.0.0 Beta 1">
+		<instruction type="sql">update_1.0.0_beta_2.sql</instruction>
+		<instruction type="file"/>
+		<instruction type="template" />
+		<instruction type="template" application="calendar">templates_calendar.tar</instruction>
+		<instruction type="acpTemplate" />
+		<instruction type="language" />
+		<instruction type="script">acp/install_com.edv-unger.guild.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="1.0.0 Beta 2">
+		<instruction type="file"/>
+		<instruction type="template" />
+		<instruction type="template" application="calendar">templates_calendar.tar</instruction>
+		<instruction type="acpTemplate" />
+		<instruction type="language" />
+		<instruction type="script">acp/install_com.edv-unger.guild.php</instruction>
 	</instructions>
 </package>

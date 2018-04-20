@@ -102,11 +102,6 @@ class WoW {
             return;
         }
 
-        $encounter = new EncounterList();
-        $encounter->sqlJoins = "LEFT JOIN guild".WCF_N."_wow_instance wow_instance ON (wow_instance.instanceID = wow_encounter.instanceID)";
-        $encounter->getConditionBuilder()->add('wow_instance.isActive = 1', []);
-        $encounter->readObjects();
-
         $avatar = new AvatarList();
         $avatar->getActive();
 
@@ -120,6 +115,11 @@ class WoW {
         }
 
         foreach ($guilds as $guild) {
+            $encounter = new EncounterList();
+            $encounter->sqlJoins = "LEFT JOIN guild".WCF_N."_wow_instance wow_instance ON (wow_instance.instanceID = wow_encounter.instanceID)";
+            $encounter->getConditionBuilder()->add('wow_instance.isActive = 1', []);
+            $encounter->readObjects();
+
             $region = new jpWoWRegion($guild->getApiData('region'), $guild->getApiData('locale'));
 
             $wow = new jpWoW($region);

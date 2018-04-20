@@ -60,7 +60,7 @@
 
 							{event name='rowButtons'}
 						</td>
-						<td class="columnID columnMemberID">{@$guild->guildID}</td>
+						<td class="columnID columnGameID">{@$guild->guildID}</td>
 						<td class="columnTitle columnName">{@$guild->name}</td>
 						
 						{event name='columns'}

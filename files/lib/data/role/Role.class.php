@@ -20,6 +20,21 @@ class Role extends DatabaseObject {
      * @inheritDoc
      */
     public $game = null;
+    /**
+     * @inheritDoc
+     */
+    public static function getRoleByName($name, $gameID) {
+        $sql = "SELECT	*
+			FROM	guild".WCF_N."_role
+			WHERE	name = ?
+			AND     gameID = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([$name, $gameID]);
+        $row = $statement->fetchArray();
+        if (!$row) $row = [];
+
+        return new self(null, $row);
+    }
 
     /**
      * Returns the game

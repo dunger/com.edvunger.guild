@@ -22,7 +22,7 @@ class InstanceList extends DatabaseObjectList {
     public function getInstances() {
         parent::readObjects();
     }
-    
+
 	/**
 	 * @inheritDoc
 	 */
@@ -45,7 +45,7 @@ class InstanceList extends DatabaseObjectList {
         		LEFT JOIN	guild".WCF_N."_wow_encounter_kills wow_encounter_kills ON (wow_encounter_kills.encounterID = wow_encounter.encounterID)
         		WHERE		wow_instance.isActive = 1
         			AND		wow_instance.isRaid = 1
-        			AND     wow_encounter_kills.guildID IN (?)
+        			AND     wow_encounter_kills.guildID IN (?".str_repeat(',?', count($guildIDs) - 1).")
         		GROUP BY	wow_instance.title, wow_encounter_kills.guildID
         		ORDER BY	wow_instance.instanceID ASC";
         $statement = WCF::getDB()->prepareStatement($sql);

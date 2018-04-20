@@ -4,6 +4,7 @@
 
 {include file='header'}
 
+{if $member->stats}
 <style>
     body {
         background: url(https://render-eu.worldofwarcraft.com/character/{@$background}) no-repeat top center fixed;
@@ -127,5 +128,8 @@
         </aside>
     </div>
 </div>
+{else}
+    <p class="info">{lang}guild.user.member.noStats{/lang}</p>
+{/if}
 
 {include file='footer'}

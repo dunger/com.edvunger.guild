@@ -20,10 +20,10 @@ class GuildHandler extends SingletonFactory {
     /**
      * @return	Guild|null
      */
-    public function getGuilds() {
+    public function getGuilds($guildIDs=[]) {
         $guilds = [];
         foreach ($this->guilds as $guild){
-            if ($guild->getGame()->isActive == true) {
+            if ($guild->getGame()->isActive == true && ((!empty($guildIDs) && in_array($guild->guildID, $guildIDs) || empty($guildIDs)))) {
                 $guilds[$guild->guildID] = $guild;
             }
         }

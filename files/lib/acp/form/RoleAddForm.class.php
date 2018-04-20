@@ -88,15 +88,18 @@ class RoleAddForm extends AbstractForm {
 
         $game = GameHandler::getInstance()->getGame($this->gameID);
         if ($game == null) {
-            throw new UserInputException('gameID', 'invalid');
+            throw new UserInputException('gameID', 'notFound');
         }
 
         $roles = RoleHandler::getInstance()->getRolesByGame($this->gameID);
-
         if ($roles !== null && count($roles) > 4) {
-            throw new UserInputException('gameID', 'invalid');
+            throw new UserInputException('gameID', 'tooMany');
         }
 
+        $role = Role::getRoleByName($this->name, $this->gameID);
+        if ((!isset($this->role) && $role->roleID) || (isset($this->role) && $role->gameID != $this->role->roleID)) {
+            throw new UserInputException('name', 'inUse');
+        }
     }
 
     /**

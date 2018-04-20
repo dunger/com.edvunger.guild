@@ -73,7 +73,7 @@ class GameEditForm extends GameAddForm {
         // update Game
         $this->objectAction = new GameAction([$this->game], 'update', ['data' => [
             'name' => $this->name,
-            'apiClass' => $this->apiData[$this->apiClass],
+            //'apiClass' => $this->apiData[$this->apiClass],
             'apiKey' => $this->apiKey,
             'isActive' => 1,
         ]]);
